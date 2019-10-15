@@ -29,9 +29,6 @@ public class User implements Serializable {
 	@Column(name = "email")
 	private String email;
 
-	@Column(name = "enabled")
-	private boolean enabled;
-
 	@OneToOne
 	@JoinColumn(name = "id")
 	@MapsId
@@ -41,11 +38,10 @@ public class User implements Serializable {
 
 	}
 
-	public User(String username, String password, String email, boolean enabled) {
+	public User(String username, String password, String email) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
-		this.enabled = enabled;
 	}
 
 	public Integer getId() {
@@ -78,14 +74,6 @@ public class User implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
 	}
 
 	public Person getPerson() {
