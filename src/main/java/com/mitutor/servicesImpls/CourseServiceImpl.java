@@ -36,4 +36,9 @@ public class CourseServiceImpl implements ICourseService {
 		courseRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		courseRepository.deleteAll();
+	}
+
 }

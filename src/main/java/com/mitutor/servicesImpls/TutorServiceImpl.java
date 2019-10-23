@@ -36,4 +36,9 @@ public class TutorServiceImpl implements ITutorService {
 		tutorRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		tutorRepository.deleteAll();
+	}
+
 }

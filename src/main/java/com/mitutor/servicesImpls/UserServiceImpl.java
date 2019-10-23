@@ -36,4 +36,9 @@ public class UserServiceImpl implements IUserService {
 		userRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		userRepository.deleteAll();
+	}
+
 }

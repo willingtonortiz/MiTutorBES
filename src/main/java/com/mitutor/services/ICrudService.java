@@ -11,4 +11,6 @@ public interface ICrudService<T> {
 	public T save(T t) throws Exception;
 
 	public void deleteById(Integer id) throws Exception;
+	
+	public void deleteAll() throws Exception;
 }

@@ -29,6 +29,9 @@ public class User implements Serializable {
 	@Column(name = "email")
 	private String email;
 
+	@Column(name = "role")
+	private String role;
+
 	@OneToOne
 	@JoinColumn(name = "id")
 	@MapsId
@@ -38,10 +41,11 @@ public class User implements Serializable {
 
 	}
 
-	public User(String username, String password, String email) {
+	public User(String username, String password, String email, String role) {
 		this.username = username;
 		this.password = password;
 		this.email = email;
+		this.role = role;
 	}
 
 	public Integer getId() {

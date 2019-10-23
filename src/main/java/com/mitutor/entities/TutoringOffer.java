@@ -69,6 +69,10 @@ public class TutoringOffer implements Serializable {
 
 	}
 
+	public void addTopic(Topic topic) {
+		this.topics.add(topic);
+	}
+
 	public Integer getId() {
 		return id;
 	}
