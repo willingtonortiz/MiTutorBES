@@ -54,7 +54,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		httpSecurity.csrf().disable()
 				// No autenticar este request
 				// .authorizeRequests().antMatchers("/authenticate").permitAll()
-		
+
 				// Eliminar esta linea y descomentar las 2 para utilizar JWT
 				.authorizeRequests().anyRequest().permitAll().and()
 				// Las demas rutas deben autenticarse

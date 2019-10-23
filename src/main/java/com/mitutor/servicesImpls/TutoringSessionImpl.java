@@ -36,4 +36,9 @@ public class TutoringSessionImpl implements ITutoringSessionService {
 		tutoringSessionRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		tutoringSessionRepository.deleteAll();
+	}
+
 }

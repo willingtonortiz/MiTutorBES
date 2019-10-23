@@ -1,6 +1,6 @@
 package com.mitutor.entities;
 
-public enum RoleType {
-	TUTOR,
-	STUDENT
+public class RoleType {
+	public static final String TUTOR = "TUTOR";
+	public static final String STUDENT = "STUDENT";
 }

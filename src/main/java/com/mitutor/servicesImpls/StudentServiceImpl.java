@@ -36,4 +36,9 @@ public class StudentServiceImpl implements IStudentService {
 		studentRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		studentRepository.deleteAll();
+	}
+
 }

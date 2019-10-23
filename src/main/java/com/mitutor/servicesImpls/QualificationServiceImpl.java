@@ -36,4 +36,9 @@ public class QualificationServiceImpl implements IQualificationService {
 		qualificationRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		qualificationRepository.deleteAll();
+	}
+
 }

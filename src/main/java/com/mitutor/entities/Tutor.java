@@ -27,7 +27,7 @@ public class Tutor implements Serializable {
 	private Integer id;
 
 	@Column(name = "points")
-	private Float points;
+	private Double points;
 
 	@Column(name = "qualification_count")
 	private Integer qualificationCount;
@@ -54,9 +54,10 @@ public class Tutor implements Serializable {
 
 	}
 
-	public Tutor(Float points, String description) {
-		this.points = points;
+	public Tutor(String description, Double points, Integer qualificationCount) {
 		this.description = description;
+		this.points = points;
+		this.qualificationCount = qualificationCount;
 	}
 
 	public Integer getId() {
@@ -67,11 +68,11 @@ public class Tutor implements Serializable {
 		this.id = id;
 	}
 
-	public Float getPoints() {
+	public Double getPoints() {
 		return points;
 	}
 
-	public void setPoints(Float points) {
+	public void setPoints(Double points) {
 		this.points = points;
 	}
 

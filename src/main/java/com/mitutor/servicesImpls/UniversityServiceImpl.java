@@ -36,4 +36,9 @@ public class UniversityServiceImpl implements IUniversityService {
 		universityRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		universityRepository.deleteAll();
+	}
+
 }
