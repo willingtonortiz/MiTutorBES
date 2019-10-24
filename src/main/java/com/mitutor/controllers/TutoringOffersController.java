@@ -29,10 +29,10 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.*;
 
-@CrossOrigin(origins = "*", maxAge = 3600)
+
 @RestController
 @RequestMapping("/api/tutoringoffers")
-@Api(tags = "TutoringOffers", value ="Servicio Web RESTFull de TutoringOffers")
+@Api(tags = "TutoringOffers", value = "Servicio Web RESTFull de TutoringOffers")
 public class TutoringOffersController {
 
 
@@ -59,39 +59,37 @@ public class TutoringOffersController {
     ITopicService topicService;
 
 
-
     @GetMapping(value = "searchById/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value="Buscar ofertas por Id", notes ="Método para buscar ofertas por Id")
+    @ApiOperation(value = "Buscar ofertas por Id", notes = "Método para buscar ofertas por Id")
     @ApiResponses({
-            @ApiResponse(code=201,message = "Oferta encontrada"),
-            @ApiResponse(code=404,message = "Oferta no encontrada")
+            @ApiResponse(code = 201, message = "Oferta encontrada"),
+            @ApiResponse(code = 404, message = "Oferta no encontrada")
     })
-    public ResponseEntity<TutoringOfferResponse> findById(@PathVariable("id") Integer id){
+    public ResponseEntity<TutoringOfferResponse> findById(@PathVariable("id") Integer id) {
         try {
             Optional<TutoringOffer> tutoringOffer = tutoringOfferService.findById(id);
 
-            if(!tutoringOffer.isPresent()){
+            if (!tutoringOffer.isPresent()) {
                 return new ResponseEntity<TutoringOfferResponse>(HttpStatus.NOT_FOUND);
             } else {
                 TutoringOfferResponse tutoringOfferResponse = tutoringOfferResponseConverter.fromEntity(tutoringOffer.get());
-                return new ResponseEntity<TutoringOfferResponse>(tutoringOfferResponse,HttpStatus.OK);
+                return new ResponseEntity<TutoringOfferResponse>(tutoringOfferResponse, HttpStatus.OK);
             }
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             // TODO: handle exception
             return new ResponseEntity<TutoringOfferResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
 
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
-    @ApiOperation(value="Crear ofertas", notes ="Método para crear ofertas")
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "Crear ofertas", notes = "Método para crear ofertas")
     @ApiResponses({
-            @ApiResponse(code=201,message = "Oferta creada"),
-            @ApiResponse(code=400,message = "Solicitud de creacion invalida")
+            @ApiResponse(code = 201, message = "Oferta creada"),
+            @ApiResponse(code = 400, message = "Solicitud de creacion invalida")
     })
-    public ResponseEntity<TutoringOfferRequest> insertTutoringOffer(@Valid @RequestBody TutoringOfferRequest tutoringOfferRequest){
+    public ResponseEntity<TutoringOfferRequest> insertTutoringOffer(@Valid @RequestBody TutoringOfferRequest tutoringOfferRequest) {
 
         try {
 
@@ -99,7 +97,7 @@ public class TutoringOffersController {
             List<Date> startDates = new ArrayList<>();
             List<Date> endDates = new ArrayList<>();
 
-            for(TutoringSessionsRequests s : tutoringOfferRequest.getTutoringSessions() ) {
+            for (TutoringSessionsRequests s : tutoringOfferRequest.getTutoringSessions()) {
                 startDates.add(s.getStartTime());
                 endDates.add(s.getEndTime());
             }
@@ -107,19 +105,18 @@ public class TutoringOffersController {
             tutoringOffer.setStartTime(UtilServices.getMaxDate(startDates));
             tutoringOffer.setEndTime(UtilServices.getMinDate(endDates));
 
-            tutoringOffer= tutoringOfferService.save(tutoringOffer);
+            tutoringOffer = tutoringOfferService.save(tutoringOffer);
 
             TutoringSession tutoringSession = null;
             Topic topic = null;
 
             HashSet<Topic> topics = new HashSet<>();
 
-            for (TutoringSessionsRequests t: tutoringOfferRequest.getTutoringSessions()) {
+            for (TutoringSessionsRequests t : tutoringOfferRequest.getTutoringSessions()) {
                 tutoringSession = tutoringSessionRequestConverter.fromDto(t);
                 tutoringSession = tutoringSessionService.save(tutoringSession);
 
-                for(Topic to : tutoringSession.getTopics())
-                {
+                for (Topic to : tutoringSession.getTopics()) {
                     to.getTutoringSessions().add(tutoringSession);
                     topicService.save(to);
                     topics.add(to);
@@ -149,7 +146,6 @@ public class TutoringOffersController {
 
 
     }
-
 
 
 }

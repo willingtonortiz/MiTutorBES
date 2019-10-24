@@ -6,11 +6,15 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.mitutor.converters.CourseConverter;
+import com.mitutor.converters.TutorConverter;
 import com.mitutor.dtos.CourseDTO;
 import com.mitutor.dtos.Responses.TutoringOfferResponse;
+import com.mitutor.dtos.TutorDTO;
 import com.mitutor.entities.Course;
+import com.mitutor.entities.Tutor;
 import com.mitutor.entities.TutoringOffer;
 import com.mitutor.services.ICourseService;
+import com.mitutor.services.ITutorService;
 import com.mitutor.services.ITutoringOfferService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -41,10 +45,14 @@ public class UniversitiesController {
     @Autowired
     private ITutoringOfferService tutoringOfferService;
     @Autowired
+    private ITutorService tutorService;
+
+    @Autowired
     private UniversityConverter universityConverter;
     @Autowired
     private CourseConverter courseConverter;
-
+    @Autowired
+    private TutorConverter tutorConverter;
 
     //region FindAll
     @ApiOperation(value = "List universities", notes = "Method for listing all universities")
@@ -57,7 +65,9 @@ public class UniversitiesController {
         try {
             List<University> universities = universityService.findAll();
 
-            List<UniversityDto> universitiesDto = universities.stream().map(x -> universityConverter.fromEntity(x))
+            List<UniversityDto> universitiesDto = universities
+                    .stream()
+                    .map(x -> universityConverter.fromEntity(x))
                     .collect(Collectors.toList());
 
             return new ResponseEntity<List<UniversityDto>>(universitiesDto, HttpStatus.OK);
@@ -155,4 +165,41 @@ public class UniversitiesController {
     //endregion
 
 
+    //region FindTutorsByUniversityIdAndCourseId
+    @ApiOperation(value = "Find tutors by university id and course id", notes = "Method for listing all tutors related to an university and a specific course")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Tutors found"),
+            @ApiResponse(code = 400, message = "University or course not found"),
+            @ApiResponse(code = 500, message = "Internal server error")
+    })
+    @GetMapping(value = "/{universityId}/courses/{courseId}/tutors")
+    public ResponseEntity<List<TutorDTO>> findTutorsByUniversityIdAndCourseId(
+            @PathVariable("universityId") Integer universityId,
+            @PathVariable("courseId") Integer courseId
+    ) {
+        try {
+            Optional<University> foundUniversity = universityService.findById(universityId);
+            Optional<Course> foundCourse = courseService.findById(courseId);
+
+            if (!foundUniversity.isPresent()) {
+                return new ResponseEntity<List<TutorDTO>>(HttpStatus.NOT_FOUND);
+            }
+
+            if (!foundCourse.isPresent()) {
+                return new ResponseEntity<List<TutorDTO>>(HttpStatus.NOT_FOUND);
+            }
+
+            List<Tutor> tutors = tutorService.findAllByUniversityIdAndCourseId(universityId, courseId);
+
+            List<TutorDTO> tutorsDTO = tutors
+                    .stream()
+                    .map(x -> tutorConverter.fromEntity(x))
+                    .collect(Collectors.toList());
+
+            return new ResponseEntity<List<TutorDTO>>(tutorsDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<List<TutorDTO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    //endregion
 }

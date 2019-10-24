@@ -25,132 +25,178 @@ import javax.persistence.TemporalType;
 @Table(name = "tutoring_offers")
 public class TutoringOffer implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "start_time")
-	private Date startTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "start_time")
+    private Date startTime;
 
-	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "end_time")
-	private Date endTime;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "end_time")
+    private Date endTime;
 
-	@Column(name = "capacity")
-	private Integer capacity;
+    @Column(name = "capacity")
+    private Integer capacity;
 
-	@Column(name = "description")
-	private String description;
+    @Column(name = "description")
+    private String description;
 
-	@ManyToMany(cascade = CascadeType.ALL)
-	@JoinTable(name = "tutoring_offer_topic", joinColumns = @JoinColumn(name = "tutoring_offer_id"), inverseJoinColumns = @JoinColumn(name = "topic_id"))
-	private List<Topic> topics = new ArrayList<Topic>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "tutoring_offer_topic", joinColumns = @JoinColumn(name = "tutoring_offer_id"), inverseJoinColumns = @JoinColumn(name = "topic_id"))
+    private List<Topic> topics = new ArrayList<Topic>();
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "tutor_id")
-	private Tutor tutor;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutor_id")
+    private Tutor tutor;
 
-	@OneToMany(mappedBy = "tutoringOffer")
-	private List<TutoringSession> tutoringSessions = new ArrayList<TutoringSession>();
+    @OneToMany(mappedBy = "tutoringOffer")
+    private List<TutoringSession> tutoringSessions = new ArrayList<TutoringSession>();
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "course_id")
-	private Course course;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "university_id")
-	private University university;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
+    private University university;
 
-	public TutoringOffer() {
+    public TutoringOffer() {
 
-	}
+    }
 
-	public void addTopic(Topic topic) {
-		this.topics.add(topic);
-	}
+    //region Chain pattern
+    public TutoringOffer addTopic(Topic topic) {
+        this.topics.add(topic);
+        return this;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public TutoringOffer withId(Integer id) {
+        this.setId(id);
+        return this;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public TutoringOffer withStartTime(Date startTime) {
+        this.setStartTime(startTime);
+        return this;
+    }
 
-	public Date getStartTime() {
-		return startTime;
-	}
+    public TutoringOffer withEndTime(Date endTime) {
+        this.setEndTime(endTime);
+        return this;
+    }
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
+    public TutoringOffer withCapacity(Integer capacity) {
+        this.setCapacity(capacity);
+        return this;
+    }
 
-	public Date getEndTime() {
-		return endTime;
-	}
+    public TutoringOffer withDescription(String description) {
+        this.setDescription(description);
+        return this;
+    }
 
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
+    public TutoringOffer withTutor(Tutor tutor) {
+        this.setTutor(tutor);
+        return this;
+    }
 
-	public Integer getCapacity() {
-		return capacity;
-	}
+    public TutoringOffer withCourse(Course course) {
+        this.setCourse(course);
+        return this;
+    }
 
-	public void setCapacity(Integer capacity) {
-		this.capacity = capacity;
-	}
+    public TutoringOffer withUniversity(University university) {
+        this.setUniversity(university);
+        return this;
+    }
+    //endregion
 
-	public String getDescription() {
-		return description;
-	}
 
-	public void setDescription(String description) {
-		this.description = description;
-	}
+    //region Setters and Getters
+    public Integer getId() {
+        return id;
+    }
 
-	public List<Topic> getTopics() {
-		return topics;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setTopics(List<Topic> topics) {
-		this.topics = topics;
-	}
+    public Date getStartTime() {
+        return startTime;
+    }
 
-	public Tutor getTutor() {
-		return tutor;
-	}
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
 
-	public void setTutor(Tutor tutor) {
-		this.tutor = tutor;
-	}
+    public Date getEndTime() {
+        return endTime;
+    }
 
-	public List<TutoringSession> getTutoringSessions() {
-		return tutoringSessions;
-	}
+    public void setEndTime(Date endTime) {
+        this.endTime = endTime;
+    }
 
-	public void setTutoringSessions(List<TutoringSession> tutoringSessions) {
-		this.tutoringSessions = tutoringSessions;
-	}
+    public Integer getCapacity() {
+        return capacity;
+    }
 
-	public Course getCourse() {
-		return course;
-	}
+    public void setCapacity(Integer capacity) {
+        this.capacity = capacity;
+    }
 
-	public void setCourse(Course course) {
-		this.course = course;
-	}
+    public String getDescription() {
+        return description;
+    }
 
-	public University getUniversity() {
-		return university;
-	}
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-	public void setUniversity(University university) {
-		this.university = university;
-	}
+    public List<Topic> getTopics() {
+        return topics;
+    }
+
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
+
+    public Tutor getTutor() {
+        return tutor;
+    }
+
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
+    }
+
+    public List<TutoringSession> getTutoringSessions() {
+        return tutoringSessions;
+    }
+
+    public void setTutoringSessions(List<TutoringSession> tutoringSessions) {
+        this.tutoringSessions = tutoringSessions;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
+    //endregion
 
 }
