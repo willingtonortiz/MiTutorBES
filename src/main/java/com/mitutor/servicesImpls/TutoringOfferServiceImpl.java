@@ -13,32 +13,36 @@ import com.mitutor.services.ITutoringOfferService;
 @Service
 public class TutoringOfferServiceImpl implements ITutoringOfferService {
 
-	@Autowired
-	private ITutoringOfferRepository tutoringOfferRepository;
+    @Autowired
+    private ITutoringOfferRepository tutoringOfferRepository;
 
-	@Override
-	public Optional<TutoringOffer> findById(Integer id) throws Exception {
-		return tutoringOfferRepository.findById(id);
-	}
+    @Override
+    public Optional<TutoringOffer> findById(Integer id) throws Exception {
+        return tutoringOfferRepository.findById(id);
+    }
 
-	@Override
-	public List<TutoringOffer> findAll() throws Exception {
-		return tutoringOfferRepository.findAll();
-	}
+    @Override
+    public List<TutoringOffer> findAll() throws Exception {
+        return tutoringOfferRepository.findAll();
+    }
 
-	@Override
-	public TutoringOffer save(TutoringOffer t) throws Exception {
-		return tutoringOfferRepository.save(t);
-	}
+    @Override
+    public TutoringOffer save(TutoringOffer t) throws Exception {
+        return tutoringOfferRepository.save(t);
+    }
 
-	@Override
-	public void deleteById(Integer id) throws Exception {
-		tutoringOfferRepository.deleteById(id);
-	}
+    @Override
+    public void deleteById(Integer id) throws Exception {
+        tutoringOfferRepository.deleteById(id);
+    }
 
-	@Override
-	public void deleteAll() throws Exception {
-		tutoringOfferRepository.deleteAll();
-	}
+    @Override
+    public void deleteAll() throws Exception {
+        tutoringOfferRepository.deleteAll();
+    }
 
+    @Override
+    public List<TutoringOffer> findAllByUniversityIdAndCourseId(Integer universityId, Integer courseId) {
+        return tutoringOfferRepository.findAllByUniversityIdAndCourseId(universityId, courseId);
+    }
 }

@@ -21,140 +21,144 @@ import javax.persistence.Table;
 @Table(name = "persons")
 public class Person implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-	@Column(name = "name", nullable = false, length = 50)
-	private String name;
+    @Column(name = "name", nullable = false, length = 50)
+    private String name;
 
-	@Column(name = "lastname", nullable = false, length = 50)
-	private String lastName;
+    @Column(name = "lastname", nullable = false, length = 50)
+    private String lastName;
 
-	@Column(name = "semester", nullable = false)
-	private Integer semester;
+    @Column(name = "semester", nullable = false)
+    private Integer semester;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "university_id", nullable = false)
-	private University university;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id", nullable = false)
+    private University university;
 
-	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-	private User user;
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    private User user;
 
-	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-	private Student student;
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    private Student student;
 
-	@OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
-	private Tutor tutor;
+    @OneToOne(mappedBy = "person", cascade = CascadeType.ALL)
+    private Tutor tutor;
 
-	@OneToMany(mappedBy = "adressee")
-	private List<Qualification> receivedQualifications;
+    @OneToMany(mappedBy = "adressee")
+    private List<Qualification> receivedQualifications;
 
-	@OneToMany(mappedBy = "adresser")
-	private List<Qualification> givenQualifications;
+    @OneToMany(mappedBy = "adresser")
+    private List<Qualification> givenQualifications;
 
-	@OneToMany(mappedBy = "person")
-	private List<Suscription> suscriptions = new ArrayList<Suscription>();
+    @OneToMany(mappedBy = "person")
+    private List<Suscription> suscriptions = new ArrayList<Suscription>();
 
-	public Person() {
+    public Person() {
 
-	}
+    }
 
-	public Person(String name, String lastname, Integer semester) {
-		this.name = name;
-		this.lastName = lastname;
-		this.semester = semester;
-	}
+    public Person(String name, String lastname, Integer semester) {
+        this.name = name;
+        this.lastName = lastname;
+        this.semester = semester;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public String getFullname() {
+        return this.name + " " + this.lastName;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getLastName() {
-		return lastName;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
+    public String getLastName() {
+        return lastName;
+    }
 
-	public Integer getSemester() {
-		return semester;
-	}
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
 
-	public void setSemester(Integer semester) {
-		this.semester = semester;
-	}
+    public Integer getSemester() {
+        return semester;
+    }
 
-	public University getUniversity() {
-		return university;
-	}
+    public void setSemester(Integer semester) {
+        this.semester = semester;
+    }
 
-	public void setUniversity(University university) {
-		this.university = university;
-	}
+    public University getUniversity() {
+        return university;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public void setUniversity(University university) {
+        this.university = university;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public Student getStudent() {
-		return student;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public void setStudent(Student student) {
-		this.student = student;
-	}
+    public Student getStudent() {
+        return student;
+    }
 
-	public Tutor getTutor() {
-		return tutor;
-	}
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 
-	public void setTutor(Tutor tutor) {
-		this.tutor = tutor;
-	}
+    public Tutor getTutor() {
+        return tutor;
+    }
 
-	public List<Qualification> getReceivedQualifications() {
-		return receivedQualifications;
-	}
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
+    }
 
-	public void setReceivedQualifications(List<Qualification> receivedQualifications) {
-		this.receivedQualifications = receivedQualifications;
-	}
+    public List<Qualification> getReceivedQualifications() {
+        return receivedQualifications;
+    }
 
-	public List<Qualification> getGivenQualifications() {
-		return givenQualifications;
-	}
+    public void setReceivedQualifications(List<Qualification> receivedQualifications) {
+        this.receivedQualifications = receivedQualifications;
+    }
 
-	public void setGivenQualifications(List<Qualification> givenQualifications) {
-		this.givenQualifications = givenQualifications;
-	}
+    public List<Qualification> getGivenQualifications() {
+        return givenQualifications;
+    }
 
-	public List<Suscription> getSuscriptions() {
-		return suscriptions;
-	}
+    public void setGivenQualifications(List<Qualification> givenQualifications) {
+        this.givenQualifications = givenQualifications;
+    }
 
-	public void setSuscriptions(List<Suscription> suscriptions) {
-		this.suscriptions = suscriptions;
-	}
+    public List<Suscription> getSuscriptions() {
+        return suscriptions;
+    }
+
+    public void setSuscriptions(List<Suscription> suscriptions) {
+        this.suscriptions = suscriptions;
+    }
 
 }

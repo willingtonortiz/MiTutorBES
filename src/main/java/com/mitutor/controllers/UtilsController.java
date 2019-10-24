@@ -51,7 +51,7 @@ public class UtilsController {
 	@GetMapping("create")
 	public String generateData() throws Exception {
 
-		// Creaing university
+		// Creating university
 		University university1 = new University("Universidad Peruana de Ciencias Aplicadas");
 		universityService.save(university1);
 
