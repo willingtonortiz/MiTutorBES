@@ -48,11 +48,25 @@ public class Course implements Serializable {
     private University university;
 
     public Course() {
-
     }
 
     public Course(String name) {
         this.name = name;
+    }
+
+    public Course withId(Integer id) {
+        this.setId(id);
+        return this;
+    }
+
+    public Course withName(String name) {
+        this.setName(name);
+        return this;
+    }
+
+    public Course withUniversity(University university) {
+        this.setUniversity(university);
+        return this;
     }
 
     public Integer getId() {

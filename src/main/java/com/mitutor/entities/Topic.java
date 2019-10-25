@@ -19,72 +19,87 @@ import javax.persistence.Table;
 @Table(name = "topics")
 public class Topic implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "course_id")
-	private Course course;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id")
+    private Course course;
 
-	@ManyToMany(mappedBy = "topics")
-	private List<TutoringOffer> tutoringOffers = new ArrayList<TutoringOffer>();
+    @ManyToMany(mappedBy = "topics")
+    private List<TutoringOffer> tutoringOffers = new ArrayList<TutoringOffer>();
 
-	@ManyToMany(mappedBy = "topics")
-	private List<TutoringSession> tutoringSessions = new ArrayList<TutoringSession>();
+    @ManyToMany(mappedBy = "topics")
+    private List<TutoringSession> tutoringSessions = new ArrayList<TutoringSession>();
 
-	public Topic() {
+    public Topic() {
 
-	}
+    }
 
-	public Topic(String name) {
-		this.name = name;
-	}
+    public Topic(String name) {
+        this.name = name;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Topic withId(Integer id) {
+        this.setId(id);
+        return this;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Topic withName(String name) {
+        this.setName(name);
+        return this;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Topic withCourse(Course course) {
+        this.setCourse(course);
+        return this;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public Course getCourse() {
-		return course;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setCourse(Course course) {
-		this.course = course;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public List<TutoringOffer> getTutoringOffers() {
-		return tutoringOffers;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setTutoringOffers(List<TutoringOffer> tutoringOffers) {
-		this.tutoringOffers = tutoringOffers;
-	}
+    public Course getCourse() {
+        return course;
+    }
 
-	public List<TutoringSession> getTutoringSessions() {
-		return tutoringSessions;
-	}
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
-	public void setTutoringSessions(List<TutoringSession> tutoringSessions) {
-		this.tutoringSessions = tutoringSessions;
-	}
+    public List<TutoringOffer> getTutoringOffers() {
+        return tutoringOffers;
+    }
+
+    public void setTutoringOffers(List<TutoringOffer> tutoringOffers) {
+        this.tutoringOffers = tutoringOffers;
+    }
+
+    public List<TutoringSession> getTutoringSessions() {
+        return tutoringSessions;
+    }
+
+    public void setTutoringSessions(List<TutoringSession> tutoringSessions) {
+        this.tutoringSessions = tutoringSessions;
+    }
 
 }

@@ -1,22 +1,23 @@
 package com.mitutor.dtos;
 
+
 import java.io.Serializable;
 
-public class CourseDTO implements Serializable {
+public class TopicDTO implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private Integer id;
     private String name;
 
-    public CourseDTO() {
+    public TopicDTO() {
     }
 
-    public CourseDTO withId(Integer id) {
+    public TopicDTO withId(Integer id) {
         this.setId(id);
         return this;
     }
 
-    public CourseDTO withName(String name) {
+    public TopicDTO withName(String name) {
         this.setName(name);
         return this;
     }
