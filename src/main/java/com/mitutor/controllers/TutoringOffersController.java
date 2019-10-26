@@ -115,6 +115,8 @@ public class TutoringOffersController {
             for (TutoringSessionsRequests t : tutoringOfferRequest.getTutoringSessions()) {
                 tutoringSession = tutoringSessionRequestConverter.fromDto(t);
                 tutoringSession = tutoringSessionService.save(tutoringSession);
+                tutoringSession.setTutoringOffer(tutoringOffer);
+
 
                 for (Topic to : tutoringSession.getTopics()) {
                     to.getTutoringSessions().add(tutoringSession);
@@ -129,6 +131,7 @@ public class TutoringOffersController {
             tutoringOffer = tutoringOfferService.save(tutoringOffer);
 
             for (Topic to : topics) {
+                tutoringOffer.getTopics().add(to);
                 to.getTutoringOffers().add(tutoringOffer);
                 topicService.save(to);
             }
