@@ -38,4 +38,18 @@ public class UserRegisterServiceImpl implements IUserRegisterService {
 		return newuser;
 	}
 
+	@Override
+	public Optional<User> findyByUsername(String username) throws Exception {
+		// TODO Auto-generated method stub
+		return userRepository.findByUsername(username);
+	}
+
+	@Override
+	public Optional<User> findByEmail(String email) throws Exception {
+		// TODO Auto-generated method stub
+		return userRepository.findByEmail(email);
+	}
+	
+	
+
 }
