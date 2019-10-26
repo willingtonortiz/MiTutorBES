@@ -14,6 +14,14 @@ import javax.persistence.Table;
 @Table(name = "\"users\"")
 public class User implements Serializable {
 
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
