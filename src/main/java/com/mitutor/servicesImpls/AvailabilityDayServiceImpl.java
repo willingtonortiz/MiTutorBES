@@ -36,4 +36,9 @@ public class AvailabilityDayServiceImpl implements IAvailabilityDayService {
 		availabilityRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		availabilityRepository.deleteAll();
+	}
+
 }

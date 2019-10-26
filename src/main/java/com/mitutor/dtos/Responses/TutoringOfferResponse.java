@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TutoringOfferResponse {
 
-    private Integer id;
+    private Integer tutoringOfferId;
 
     private Date startTime;
 
@@ -19,9 +19,9 @@ public class TutoringOfferResponse {
 
     private String description;
 
-    private String tutorName;
+    private String tutor;
 
-    private String courseName;
+    private String course;
 
     private String universityName;
 
@@ -29,13 +29,21 @@ public class TutoringOfferResponse {
 
     private List<TutoringSessionResponse> tutoringSessionResponses = new ArrayList<>();
 
-
-    public Integer getId() {
-        return id;
+    public TutoringOfferResponse() {
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public TutoringOfferResponse(
+            Integer tutoringOfferId,
+            String course,
+            String tutor,
+            Date startTime,
+            Date endTime
+    ) {
+        this.tutoringOfferId = tutoringOfferId;
+        this.course = course;
+        this.tutor = tutor;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public Date getStartTime() {
@@ -70,20 +78,28 @@ public class TutoringOfferResponse {
         this.description = description;
     }
 
-    public String getTutorName() {
-        return tutorName;
+    public Integer getTutoringOfferId() {
+        return tutoringOfferId;
     }
 
-    public void setTutorName(String tutorName) {
-        this.tutorName = tutorName;
+    public void setTutoringOfferId(Integer tutoringOfferId) {
+        this.tutoringOfferId = tutoringOfferId;
     }
 
-    public String getCourseName() {
-        return courseName;
+    public String getTutor() {
+        return tutor;
     }
 
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+    public void setTutor(String tutor) {
+        this.tutor = tutor;
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
     }
 
     public String getUniversityName() {

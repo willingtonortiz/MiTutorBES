@@ -36,4 +36,9 @@ public class PlanServiceImpl implements IPlanService {
 		planRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		planRepository.deleteAll();
+	}
+
 }

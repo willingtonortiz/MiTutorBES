@@ -28,9 +28,9 @@ public class TutoringOfferResponseConverter implements IConverter<TutoringOffer,
         tutoringOfferResponse.setDescription(entity.getDescription());
         tutoringOfferResponse.setEndTime(entity.getEndTime());
         tutoringOfferResponse.setStartTime(entity.getStartTime());
-        tutoringOfferResponse.setId(entity.getId());
-        tutoringOfferResponse.setTutorName(entity.getTutor().getPerson().getName());
-        tutoringOfferResponse.setCourseName(entity.getCourse().getName());
+        tutoringOfferResponse.setTutoringOfferId(entity.getId());
+        tutoringOfferResponse.setTutor(entity.getTutor().getPerson().getName());
+        tutoringOfferResponse.setCourse(entity.getCourse().getName());
         tutoringOfferResponse.setUniversityName(entity.getUniversity().getName());
 
 

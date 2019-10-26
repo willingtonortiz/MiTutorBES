@@ -13,27 +13,36 @@ import com.mitutor.services.ITutorService;
 @Service
 public class TutorServiceImpl implements ITutorService {
 
-	@Autowired
-	private ITutorRepository tutorRepository;
+    @Autowired
+    private ITutorRepository tutorRepository;
 
-	@Override
-	public Optional<Tutor> findById(Integer id) throws Exception {
-		return tutorRepository.findById(id);
-	}
+    @Override
+    public Optional<Tutor> findById(Integer id) throws Exception {
+        return tutorRepository.findById(id);
+    }
 
-	@Override
-	public List<Tutor> findAll() throws Exception {
-		return tutorRepository.findAll();
-	}
+    @Override
+    public List<Tutor> findAll() throws Exception {
+        return tutorRepository.findAll();
+    }
 
-	@Override
-	public Tutor save(Tutor t) throws Exception {
-		return tutorRepository.save(t);
-	}
+    @Override
+    public Tutor save(Tutor t) throws Exception {
+        return tutorRepository.save(t);
+    }
 
-	@Override
-	public void deleteById(Integer id) throws Exception {
-		tutorRepository.deleteById(id);
-	}
+    @Override
+    public void deleteById(Integer id) throws Exception {
+        tutorRepository.deleteById(id);
+    }
 
+    @Override
+    public void deleteAll() throws Exception {
+        tutorRepository.deleteAll();
+    }
+
+    @Override
+    public List<Tutor> findAllByUniversityIdAndCourseId(Integer universityId, Integer courseId) {
+        return tutorRepository.findAllByUniversityIdAndCourseId(universityId, courseId);
+    }
 }

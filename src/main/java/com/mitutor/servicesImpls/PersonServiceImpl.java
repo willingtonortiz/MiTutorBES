@@ -36,4 +36,9 @@ public class PersonServiceImpl implements IPersonService {
 		personRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		personRepository.deleteAll();
+	}
+
 }

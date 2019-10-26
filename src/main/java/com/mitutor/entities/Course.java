@@ -21,94 +21,108 @@ import javax.persistence.Table;
 @Table(name = "courses")
 public class Course implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
-	@OneToMany(mappedBy = "course")
-	private List<Topic> topics = new ArrayList<Topic>();
+    @OneToMany(mappedBy = "course")
+    private List<Topic> topics = new ArrayList<Topic>();
 
-	@ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
-	private List<Student> students = new ArrayList<Student>();
+    @ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
+    private List<Student> students = new ArrayList<Student>();
 
-	@ManyToMany(mappedBy = "courses", cascade = CascadeType.ALL)
-	private List<Tutor> tutors = new ArrayList<Tutor>();
+    @OneToMany(mappedBy = "course")
+    private List<TutorCourse> tutorCourses = new ArrayList<TutorCourse>();
 
-	@OneToMany(mappedBy = "course")
-	private List<TutoringOffer> tutoringOffers = new ArrayList<>();
+    @OneToMany(mappedBy = "course")
+    private List<TutoringOffer> tutoringOffers = new ArrayList<>();
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "university_id")
-	private University university;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "university_id")
+    private University university;
 
-	public Course() {
+    public Course() {
+    }
 
-	}
+    public Course(String name) {
+        this.name = name;
+    }
 
-	public Course(String name) {
-		this.name = name;
-	}
+    public Course withId(Integer id) {
+        this.setId(id);
+        return this;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public Course withName(String name) {
+        this.setName(name);
+        return this;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Course withUniversity(University university) {
+        this.setUniversity(university);
+        return this;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public List<Topic> getTopics() {
-		return topics;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setTopics(List<Topic> topics) {
-		this.topics = topics;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public List<Student> getStudents() {
-		return students;
-	}
+    public List<Topic> getTopics() {
+        return topics;
+    }
 
-	public void setStudents(List<Student> students) {
-		this.students = students;
-	}
+    public void setTopics(List<Topic> topics) {
+        this.topics = topics;
+    }
 
-	public List<Tutor> getTutors() {
-		return tutors;
-	}
+    public List<Student> getStudents() {
+        return students;
+    }
 
-	public void setTutors(List<Tutor> tutors) {
-		this.tutors = tutors;
-	}
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
 
-	public List<TutoringOffer> getTutoringOffers() {
-		return tutoringOffers;
-	}
+    public List<TutorCourse> getTutorCourses() {
+        return tutorCourses;
+    }
 
-	public void setTutoringOffers(List<TutoringOffer> tutoringOffers) {
-		this.tutoringOffers = tutoringOffers;
-	}
+    public void setTutorCourses(List<TutorCourse> tutorCourses) {
+        this.tutorCourses = tutorCourses;
+    }
 
-	public University getUniversity() {
-		return university;
-	}
+    public List<TutoringOffer> getTutoringOffers() {
+        return tutoringOffers;
+    }
 
-	public void setUniversity(University university) {
-		this.university = university;
-	}
+    public void setTutoringOffers(List<TutoringOffer> tutoringOffers) {
+        this.tutoringOffers = tutoringOffers;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
 
 }

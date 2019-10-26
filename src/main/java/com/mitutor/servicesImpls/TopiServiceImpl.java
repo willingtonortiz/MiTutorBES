@@ -36,4 +36,9 @@ public class TopiServiceImpl implements ITopicService {
 		topicRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		topicRepository.deleteAll();
+	}
+
 }

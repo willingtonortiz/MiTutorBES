@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import java.util.ArrayList;
 
 @Component
-public class TutoringOfferRequestConverter implements  IConverter<TutoringOffer, TutoringOfferRequest>{
+public class TutoringOfferRequestConverter implements IConverter<TutoringOffer, TutoringOfferRequest> {
 
     @Autowired
     ICourseService courseService;
@@ -27,7 +27,6 @@ public class TutoringOfferRequestConverter implements  IConverter<TutoringOffer,
 
     @Autowired
     TutoringSessionRequestConvert tutoringSessionRequestConvert;
-
 
 
     @Override

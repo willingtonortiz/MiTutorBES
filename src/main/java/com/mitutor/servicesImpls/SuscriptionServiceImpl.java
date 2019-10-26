@@ -36,4 +36,9 @@ public class SuscriptionServiceImpl implements ISuscriptionService {
 		suscriptionRepository.deleteById(id);
 	}
 
+	@Override
+	public void deleteAll() throws Exception {
+		suscriptionRepository.deleteAll();
+	}
+
 }

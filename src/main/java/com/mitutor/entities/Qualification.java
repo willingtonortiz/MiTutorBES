@@ -31,7 +31,7 @@ public class Qualification implements Serializable {
 
 	// El rol del usuario calificado
 	@Column(name = "adresseeRole")
-	private RoleType adresseeRole;
+	private String adresseeRole;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "adresser_id")
@@ -73,11 +73,11 @@ public class Qualification implements Serializable {
 		this.comment = comment;
 	}
 
-	public RoleType getAdresseeRole() {
+	public String getAdresseeRole() {
 		return adresseeRole;
 	}
 
-	public void setAdresseeRole(RoleType adresseeRole) {
+	public void setAdresseeRole(String adresseeRole) {
 		this.adresseeRole = adresseeRole;
 	}
 
