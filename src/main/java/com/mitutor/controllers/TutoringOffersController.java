@@ -117,7 +117,7 @@ public class TutoringOffersController {
                 tutoringSession = tutoringSessionService.save(tutoringSession);
                 tutoringSession.setTutoringOffer(tutoringOffer);
 
-             
+
                 for (Topic to : tutoringSession.getTopics()) {
                     to.getTutoringSessions().add(tutoringSession);
                     topicService.save(to);
