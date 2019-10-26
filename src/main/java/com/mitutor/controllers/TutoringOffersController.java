@@ -118,6 +118,8 @@ public class TutoringOffersController {
                 tutoringSession = tutoringSessionRequestConverter.fromDto(t);
                 tutoringSession = tutoringSessionService.save(tutoringSession);
 
+                tutoringSession.setTutoringOffer(tutoringOffer);
+
                 for(Topic to : tutoringSession.getTopics())
                 {
                     to.getTutoringSessions().add(tutoringSession);
