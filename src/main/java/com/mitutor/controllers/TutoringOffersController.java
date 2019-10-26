@@ -131,6 +131,7 @@ public class TutoringOffersController {
             tutoringOffer = tutoringOfferService.save(tutoringOffer);
 
             for (Topic to : topics) {
+                tutoringOffer.getTopics().add(to);
                 to.getTutoringOffers().add(tutoringOffer);
                 topicService.save(to);
             }
