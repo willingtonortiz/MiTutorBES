@@ -6,10 +6,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.mitutor.converters.CourseConverter;
+import com.mitutor.converters.Output.TutoringOfferInfo;
 import com.mitutor.converters.TutorConverter;
+import com.mitutor.converters.TutoringOfferConverter;
 import com.mitutor.dtos.CourseDTO;
 import com.mitutor.dtos.Responses.TutoringOfferResponse;
 import com.mitutor.dtos.TutorDTO;
+import com.mitutor.dtos.TutoringOfferDTO;
 import com.mitutor.entities.Course;
 import com.mitutor.entities.Tutor;
 import com.mitutor.entities.TutoringOffer;
@@ -38,6 +41,7 @@ import com.mitutor.services.IUniversityService;
 @Api(tags = "University", value = "Web service RESTfull for universities")
 public class UniversitiesController {
 
+    //region Attributes
     @Autowired
     private IUniversityService universityService;
     @Autowired
@@ -53,6 +57,10 @@ public class UniversitiesController {
     private CourseConverter courseConverter;
     @Autowired
     private TutorConverter tutorConverter;
+    @Autowired
+    private TutoringOfferConverter tutoringOfferConverter;
+    //endregion
+
 
     //region FindAll
     @ApiOperation(value = "List universities", notes = "Method for listing all universities")
@@ -87,38 +95,39 @@ public class UniversitiesController {
             @ApiResponse(code = 500, message = "Internal server error")
     })
     @GetMapping(value = "/{universityId}/courses/{courseId}/tutoringoffers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<TutoringOfferResponse>> findTutoringOffersByUniversityIdAndCourseId(
+    public ResponseEntity<List<TutoringOfferInfo>> findTutoringOffersByUniversityIdAndCourseId(
             @PathVariable("universityId") Integer universityId,
             @PathVariable("courseId") Integer courseId
     ) {
         try {
             Optional<University> foundUniversity = universityService.findById(universityId);
             if (!foundUniversity.isPresent()) {
-                return new ResponseEntity<List<TutoringOfferResponse>>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<List<TutoringOfferInfo>>(HttpStatus.NOT_FOUND);
             }
 
             Optional<Course> foundCourse = courseService.findById(courseId);
             if (!foundCourse.isPresent()) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<List<TutoringOfferInfo>>(HttpStatus.NOT_FOUND);
             }
 
-            List<TutoringOffer> tutoringOffers = tutoringOfferService.findAllByUniversityIdAndCourseId(universityId, courseId);
-            List<TutoringOfferResponse> tutoringOffersResponse = new ArrayList<TutoringOfferResponse>();
+            List<TutoringOffer> tutoringOffers = tutoringOfferService
+                    .findAllByUniversityIdAndCourseId(universityId, courseId);
 
-            for (TutoringOffer item : tutoringOffers) {
-                tutoringOffersResponse.add(new TutoringOfferResponse(
-                        item.getId(),
-                        item.getCourse().getName(),
-                        item.getTutor().getPerson().getFullname(),
-                        item.getStartTime(),
-                        item.getEndTime()
-                ));
-            }
+            List<TutoringOfferInfo> tutoringOffersInfo = tutoringOffers
+                    .stream()
+                    .map(x -> new TutoringOfferInfo()
+                            .withId(x.getId())
+                            .withCourseName(x.getCourse().getName())
+                            .withTutorName(x.getTutor().getPerson().getFullname())
+                            .withStartTime(x.getStartTime())
+                            .withEndTime(x.getEndTime())
+                    )
+                    .collect(Collectors.toList());
 
-            return new ResponseEntity<List<TutoringOfferResponse>>(tutoringOffersResponse, HttpStatus.OK);
+            return new ResponseEntity<List<TutoringOfferInfo>>(tutoringOffersInfo, HttpStatus.OK);
 
         } catch (Exception e) {
-            return new ResponseEntity<List<TutoringOfferResponse>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<List<TutoringOfferInfo>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     //endregion
