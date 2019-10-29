@@ -17,4 +17,6 @@ public interface IUserRepository extends JpaRepository<User, Integer> {
 
 	@Query(value = "SELECT u from User u WHERE u.email = :email")
 	Optional<User> findByEmail(@Param("email") String email) throws Exception;
+
+	
 }

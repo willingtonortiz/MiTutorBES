@@ -70,7 +70,8 @@ public class RegisterController {
 			newStudent.setPerson(newPerson);
 
 			User userResult = userRegService.register(newPerson, newStudent, newUser);
-
+			
+		
 			UserRegisterResponse userResponse = new UserRegisterResponse();
 
 			userResponse.setId(userResult.getId());
