@@ -1,11 +1,14 @@
 package com.mitutor.controllers;
 
+import com.mitutor.converters.CourseConverter;
 import com.mitutor.converters.TutorConverter;
 import com.mitutor.dtos.CourseDTO;
 import com.mitutor.dtos.TutorDTO;
 import com.mitutor.entities.Course;
 import com.mitutor.entities.Tutor;
+import com.mitutor.entities.TutorCourse;
 import com.mitutor.services.ICourseService;
+import com.mitutor.services.ITutorCourseService;
 import com.mitutor.services.ITutorService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -29,6 +33,11 @@ public class TutorsController {
     private ITutorService tutorService;
     @Autowired
     private ICourseService courseService;
+    @Autowired
+    private CourseConverter courseConverter;
+    @Autowired
+    private ITutorCourseService tutorCourseService;
+
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TutorDTO>> findAll() {
@@ -58,20 +67,55 @@ public class TutorsController {
 
             courses.forEach(x -> System.out.println((x.getName())));
 
-            return new ResponseEntity<>(HttpStatus.OK);
+            List<CourseDTO> coursesDTO = courses.stream().map(x -> courseConverter.fromEntity(x)).collect(Collectors.toList());
+
+            return new ResponseEntity<>(coursesDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @PostMapping(
             value = "/{tutorId}/courses",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<Boolean> addTutorCourse(
-            @PathVariable("tutorId") Integer tutorId
+    public ResponseEntity<Integer> addTutorCourse(
+            @PathVariable("tutorId") Integer tutorId,
+            @RequestBody() Integer courseId
     ) {
-        return null;
+        try {
+            System.out.println(tutorId + " " + courseId);
+            Optional<Course> foundCourse = courseService.findById(courseId);
+            Optional<Tutor> foundTutor = tutorService.findById(tutorId);
+
+            if (!foundCourse.isPresent()) {
+                return new ResponseEntity<>(2, HttpStatus.NOT_FOUND);
+            }
+//            System.out.println("flag 1");
+            if (!foundTutor.isPresent()) {
+                return new ResponseEntity<>(3, HttpStatus.NOT_FOUND);
+            }
+
+//            System.out.println("flag 2");
+            Course course = foundCourse.get();
+            Tutor tutor = foundTutor.get();
+
+            List<Course> courses = courseService.findAllByTutorId(tutor.getId());
+
+            for (Course item : courses) {
+                if (item.getId().equals(course.getId()))
+                    return new ResponseEntity<>(4, HttpStatus.BAD_REQUEST);
+            }
+
+//            System.out.println("flag 3");
+
+            tutorCourseService.save(new TutorCourse().withTutor(tutor).withCourse(course));
+            return new ResponseEntity<>(1, HttpStatus.OK);
+
+        } catch (Exception ex) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
