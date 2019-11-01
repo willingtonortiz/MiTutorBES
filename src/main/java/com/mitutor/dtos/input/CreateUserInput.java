@@ -9,6 +9,7 @@ public class CreateUserInput {
 	public String lastName;
 	public Integer semester;
 	public Integer universityId;
+	public String career;
 	public String getUsername() {
 		return username;
 	}
@@ -51,4 +52,12 @@ public class CreateUserInput {
 	public void setUniversityId(Integer universityId) {
 		this.universityId = universityId;
 	}
+	public String getCareer() {
+		return career;
+	}
+	public void setCareer(String career) {
+		this.career = career;
+	}
+
+	
 }
