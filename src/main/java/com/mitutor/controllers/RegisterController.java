@@ -34,7 +34,7 @@ public class RegisterController {
 	private IUniversityService uniService;
 
 	@Autowired
-	private IUserRegisterService userRegService;
+	private IUserRegisterService userRegisterService;
 
 	@ApiOperation(value = "Register user", notes = "Method create a new user")
 	@ApiResponses({ @ApiResponse(code = 200, message = "User created sucessfully"),
@@ -54,6 +54,7 @@ public class RegisterController {
 			newPerson.setName(createUser.getName());
 			newPerson.setLastName(createUser.getLastName());
 			newPerson.setSemester(createUser.getSemester());
+			newPerson.setCareer(createUser.getCareer());
 			newPerson.setUniversity(universityFound.get());
 
 			Student newStudent = new Student();
@@ -69,7 +70,7 @@ public class RegisterController {
 			newPerson.setStudent(newStudent);
 			newStudent.setPerson(newPerson);
 
-			User userResult = userRegService.register(newPerson, newStudent, newUser);
+			User userResult = userRegisterService.register(newPerson, newStudent, newUser);
 			
 		
 			UserRegisterResponse userResponse = new UserRegisterResponse();

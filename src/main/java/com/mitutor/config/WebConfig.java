@@ -20,11 +20,11 @@ public class WebConfig {
         config.setAllowCredentials(true);
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("DELETE");
-        source.registerCorsConfiguration("/**", config);
+        config.addAllowedMethod("*");
+
+        source.registerCorsConfiguration("/swagger-ui.html", config);
+
+        
         return new CorsFilter(source);
     }
 }
