@@ -35,26 +35,18 @@ import java.util.*;
 @Api(tags = "TutoringOffers", value = "Servicio Web RESTFull de TutoringOffers")
 public class TutoringOffersController {
 
-
     @Autowired
     TutoringOfferRequestConverter tutoringOfferRequestConverter;
-
     @Autowired
     TutoringSessionRequestConvert tutoringSessionRequestConverter;
-
-
     @Autowired
     TutoringOfferResponseConverter tutoringOfferResponseConverter;
-
     @Autowired
     TutoringSessionResponseConverter tutoringSessionResponseConverter;
-
     @Autowired
     ITutoringOfferService tutoringOfferService;
-
     @Autowired
     ITutoringSessionService tutoringSessionService;
-
     @Autowired
     ITopicService topicService;
 
@@ -146,9 +138,6 @@ public class TutoringOffersController {
         } catch (Exception ex) {
             return new ResponseEntity<TutoringOfferRequest>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-
-
     }
-
 
 }
