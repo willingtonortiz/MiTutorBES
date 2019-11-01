@@ -1,12 +1,22 @@
 package com.mitutor.controllers;
 
 import java.util.Date;
+import java.util.Optional;
 
 import com.mitutor.entities.*;
 import com.mitutor.enums.TutorStatus;
 import com.mitutor.services.*;
+import com.mitutor.servicesImpls.UserRegisterServiceImpl;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,6 +42,8 @@ public class UtilsController {
     private ITutoringOfferService tutoringOfferService;
     @Autowired
     private ITutorCourseService tutorCourseService;
+    @Autowired
+    private IUserRegisterService userRegService;
 
     @GetMapping("create")
     public String generateData() throws Exception {
@@ -188,5 +200,53 @@ public class UtilsController {
         return "Datos eliminados";
     }
 
+
+    @ApiOperation(value = "Find user by username", notes = "Method for validate username if is available or not")
+    @ApiResponses({@ApiResponse(code = 302, message = "Username is not available"),
+            @ApiResponse(code = 404, message = "Username is available "),
+            @ApiResponse(code = 500, message = "Internal server error")})
+
+    @GetMapping("userExist/{username}")
+    public ResponseEntity<String> isUsernameExist(@PathVariable("username") String username) {
+        try {
+            Optional<User> userFound = userRegService.findyByUsername(username);
+
+            if (!userFound.isPresent()) {
+                return new ResponseEntity<String>("User is available", HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<String>("User is not available", HttpStatus.FOUND);
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
+    }
+
+    @ApiOperation(value = "Find user by email", notes = "Method for validate email if is available or not")
+    @ApiResponses({@ApiResponse(code = 302, message = "Email is not available"),
+            @ApiResponse(code = 404, message = "Email is available "),
+            @ApiResponse(code = 500, message = "Internal server error")})
+    @GetMapping("emailExist/{email}")
+    public ResponseEntity<String> isEmailExist(@PathVariable("email") String email) {
+
+        try {
+            Optional<User> userFound = userRegService.findByEmail(email);
+            if (!userFound.isPresent()) {
+                return new ResponseEntity<String>("El email esta disponible", HttpStatus.NOT_FOUND);
+
+            }
+            return new ResponseEntity<String>("El email ya existe", HttpStatus.FOUND);
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+
+    }
 
 }
