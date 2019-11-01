@@ -9,4 +9,6 @@ public interface ICourseService extends ICrudService<Course> {
     Optional<Course> findByUniversityIdAndName(Integer universityId, String name);
 
     List<Course> findAllByUniversityId(Integer universityId);
+
+    List<Course> findAllByTutorId(Integer tutorId);
 }
