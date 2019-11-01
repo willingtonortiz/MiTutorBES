@@ -16,70 +16,75 @@ import javax.persistence.Table;
 @Table(name = "universities")
 public class University implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id")
-	private Integer id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer id;
 
-	@Column(name = "name")
-	private String name;
+    @Column(name = "name")
+    private String name;
 
-	@OneToMany(mappedBy = "university")
-	private List<Person> persons = new ArrayList<Person>();
+    @OneToMany(mappedBy = "university")
+    private List<Person> persons = new ArrayList<Person>();
 
-	@OneToMany(mappedBy = "university")
-	private List<Course> courses = new ArrayList<Course>();
+    @OneToMany(mappedBy = "university")
+    private List<Course> courses = new ArrayList<Course>();
 
-	@OneToMany(mappedBy = "university")
-	private List<TutoringOffer> tutoringOffers = new ArrayList<TutoringOffer>();
+    @OneToMany(mappedBy = "university")
+    private List<TutoringOffer> tutoringOffers = new ArrayList<TutoringOffer>();
 
-	public University() {
-	}
+    public University() {
+    }
 
-	public University(String name) {
-		this.name = name;
-	}
+    public University withName(String name) {
+        this.setName(name);
+        return this;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public University(String name) {
+        this.name = name;
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public List<Person> getPersons() {
-		return persons;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setPersons(List<Person> persons) {
-		this.persons = persons;
-	}
+    public List<Person> getPersons() {
+        return persons;
+    }
 
-	public List<Course> getCourses() {
-		return courses;
-	}
+    public void setPersons(List<Person> persons) {
+        this.persons = persons;
+    }
 
-	public void setCourses(List<Course> courses) {
-		this.courses = courses;
-	}
+    public List<Course> getCourses() {
+        return courses;
+    }
 
-	public List<TutoringOffer> getTutoringOffers() {
-		return tutoringOffers;
-	}
+    public void setCourses(List<Course> courses) {
+        this.courses = courses;
+    }
 
-	public void setTutoringOffers(List<TutoringOffer> tutoringOffers) {
-		this.tutoringOffers = tutoringOffers;
-	}
+    public List<TutoringOffer> getTutoringOffers() {
+        return tutoringOffers;
+    }
+
+    public void setTutoringOffers(List<TutoringOffer> tutoringOffers) {
+        this.tutoringOffers = tutoringOffers;
+    }
 
 }

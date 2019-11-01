@@ -6,13 +6,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import com.mitutor.converters.CourseConverter;
-import com.mitutor.converters.Output.TutoringOfferInfo;
+import com.mitutor.dtos.output.TutorInfo;
+import com.mitutor.dtos.output.TutoringOfferInfo;
 import com.mitutor.converters.TutorConverter;
 import com.mitutor.converters.TutoringOfferConverter;
 import com.mitutor.dtos.CourseDTO;
-import com.mitutor.dtos.Responses.TutoringOfferResponse;
 import com.mitutor.dtos.TutorDTO;
-import com.mitutor.dtos.TutoringOfferDTO;
 import com.mitutor.entities.Course;
 import com.mitutor.entities.Tutor;
 import com.mitutor.entities.TutoringOffer;
@@ -24,12 +23,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException.BadRequest;
 
 import com.mitutor.converters.UniversityConverter;
 import com.mitutor.dtos.UniversityDto;
@@ -147,13 +144,18 @@ public class UniversitiesController {
     ) {
         try {
             if (courseName == null) {
-                List<Course> courses = courseService.findAllByUniversityId(universityId);
+                List<Course> courses = courseService
+                        .findAllByUniversityId(universityId);
 
-                List<CourseDTO> coursesDTO = courses.stream().map(x -> courseConverter.fromEntity(x)).collect(Collectors.toList());
+                List<CourseDTO> coursesDTO = courses
+                        .stream()
+                        .map(x -> courseConverter.fromEntity(x))
+                        .collect(Collectors.toList());
 
                 return new ResponseEntity<List<CourseDTO>>(coursesDTO, HttpStatus.OK);
             } else {
-                Optional<Course> optionalCourse = courseService.findByUniversityIdAndName(universityId, courseName);
+                Optional<Course> optionalCourse = courseService
+                        .findByUniversityIdAndName(universityId, courseName);
 
                 if (!optionalCourse.isPresent()) {
                     return new ResponseEntity<List<CourseDTO>>(HttpStatus.BAD_REQUEST);
@@ -182,7 +184,7 @@ public class UniversitiesController {
             @ApiResponse(code = 500, message = "Internal server error")
     })
     @GetMapping(value = "/{universityId}/courses/{courseId}/tutors")
-    public ResponseEntity<List<TutorDTO>> findTutorsByUniversityIdAndCourseId(
+    public ResponseEntity<List<TutorInfo>> findTutorsByUniversityIdAndCourseId(
             @PathVariable("universityId") Integer universityId,
             @PathVariable("courseId") Integer courseId
     ) {
@@ -191,23 +193,28 @@ public class UniversitiesController {
             Optional<Course> foundCourse = courseService.findById(courseId);
 
             if (!foundUniversity.isPresent()) {
-                return new ResponseEntity<List<TutorDTO>>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
             if (!foundCourse.isPresent()) {
-                return new ResponseEntity<List<TutorDTO>>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
 
             List<Tutor> tutors = tutorService.findAllByUniversityIdAndCourseId(universityId, courseId);
 
-            List<TutorDTO> tutorsDTO = tutors
+            List<TutorInfo> tutorsDTO = tutors
                     .stream()
-                    .map(x -> tutorConverter.fromEntity(x))
+                    .map(x -> new TutorInfo()
+                            .withId(x.getId())
+                            .withFullName(x.getPerson().getFullname())
+                            .withCareer(x.getPerson().getCareer())
+                            .withPoints(x.getPoints())
+                    )
                     .collect(Collectors.toList());
 
-            return new ResponseEntity<List<TutorDTO>>(tutorsDTO, HttpStatus.OK);
+            return new ResponseEntity<>(tutorsDTO, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<List<TutorDTO>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     //endregion

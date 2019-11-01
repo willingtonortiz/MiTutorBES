@@ -37,59 +37,88 @@ public class UtilsController {
     public String generateData() throws Exception {
 
         // Creating university
-        University university1 = new University("Universidad Peruana de Ciencias Aplicadas");
+        University university1 = new University().withName("Universidad Peruana de Ciencias Aplicadas");
         universityService.save(university1);
 
         // Creating courses
-        Course course1 = new Course("calculo 2");
-        course1.setUniversity(university1);
+        Course course1 = new Course().withName("calculo 2").withUniversity(university1);
         courseService.save(course1);
-
-        Course course2 = new Course("fisica 3");
-        course2.setUniversity(university1);
+        Course course2 = new Course().withName("fisica 3").withUniversity(university1);
         courseService.save(course2);
-
-        Course course3 = new Course("programacion 1");
-        course3.setUniversity(university1);
+        Course course3 = new Course().withName("programacion 1").withUniversity(university1);
         courseService.save(course3);
 
         // Creating topics
-        Topic topic1 = new Topic("topic_1_1");
-        topic1.setCourse(course1);
-        topicService.save(topic1);
+        Topic topic_1_1 = new Topic().withName("topic_1_1").withCourse(course1);
+        topicService.save(topic_1_1);
+        Topic topic_1_2 = new Topic().withName("topic_1_2").withCourse(course1);
+        topicService.save(topic_1_2);
+        Topic topic_1_3 = new Topic().withName("topic_1_3").withCourse(course1);
+        topicService.save(topic_1_3);
 
-        Topic topic2 = new Topic("topic_2_1");
-        topic2.setCourse(course2);
-        topicService.save(topic2);
+        Topic topic_2_1 = new Topic().withName("topic_2_1").withCourse(course2);
+        topicService.save(topic_2_1);
+        Topic topic_2_2 = new Topic().withName("topic_2_2").withCourse(course2);
+        topicService.save(topic_2_2);
+        Topic topic_2_3 = new Topic().withName("topic_2_3").withCourse(course2);
+        topicService.save(topic_2_3);
 
-        Topic topic3 = new Topic("topic_3_1");
-        topic3.setCourse(course3);
-        topicService.save(topic3);
+        Topic topic_3_1 = new Topic().withName("topic_3_1").withCourse(course3);
+        topicService.save(topic_3_1);
+        Topic topic_3_2 = new Topic().withName("topic_3_2").withCourse(course3);
+        topicService.save(topic_3_2);
+        Topic topic_3_3 = new Topic().withName("topic_3_3").withCourse(course3);
+        topicService.save(topic_3_3);
+
 
         // Creating persons
-        Person person1 = new Person("person_1", "lastname_1", 6);
-        person1.setUniversity(university1);
+        Person person1 = new Person()
+                .withName("person_1")
+                .withLastname("lastname_1")
+                .withSemester(6)
+                .withCareer("ingenieria de software")
+                .withUniversity(university1);
         personService.save(person1);
 
-        Person person2 = new Person("person_2", "lastname_2", 5);
-        person2.setUniversity(university1);
+        Person person2 = new Person()
+                .withName("person_2")
+                .withLastname("lastname_2")
+                .withSemester(5)
+                .withCareer("ingenieria industrial")
+                .withUniversity(university1);
         personService.save(person2);
 
-        Person person3 = new Person("person_3", "lastname_3", 4);
-        person3.setUniversity(university1);
+        Person person3 = new Person()
+                .withName("person_3")
+                .withLastname("lastname_3")
+                .withSemester(4)
+                .withCareer("ingenieria economica")
+                .withUniversity(university1);
         personService.save(person3);
 
         // Creating users
-        User user1 = new User("username_1", "password_1", "email1@email1.com", RoleType.TUTOR);
-        user1.setPerson(person1);
+        User user1 = new User()
+                .withUsername("username_1")
+                .withPassword("password_1")
+                .withEmail("email1@email1.com")
+                .withRole(RoleType.TUTOR)
+                .withPerson(person1);
         userService.save(user1);
 
-        User user2 = new User("username_2", "password_2", "email2@email2.com", RoleType.STUDENT);
-        user2.setPerson(person2);
+        User user2 = new User()
+                .withUsername("username_2")
+                .withPassword("password_2")
+                .withEmail("email2@email2.com")
+                .withRole(RoleType.TUTOR)
+                .withPerson(person2);
         userService.save(user2);
 
-        User user3 = new User("username_3", "password_3", "email3@email3.com", RoleType.STUDENT);
-        user3.setPerson(person3);
+        User user3 = new User()
+                .withUsername("username_3")
+                .withPassword("password_3")
+                .withEmail("email3@email3.com")
+                .withRole(RoleType.TUTOR)
+                .withPerson(person3);
         userService.save(user3);
 
         // Creating tutors
@@ -100,6 +129,14 @@ public class UtilsController {
                 .withStatus(TutorStatus.AVAILABLE)
                 .withPerson(person1);
         tutorService.save(tutor1);
+
+        Tutor tutor3 = new Tutor()
+                .withDescription("Tutor de programacion")
+                .withPoints(4.05)
+                .withQualificationCount(25)
+                .withStatus(TutorStatus.AVAILABLE)
+                .withPerson(person3);
+        tutorService.save(tutor3);
 
 
         // Creating TutorCourse relashionships
@@ -114,10 +151,23 @@ public class UtilsController {
                 .withTutor(tutor1)
                 .withCourse(course1)
                 .withUniversity(university1)
-                .addTopic(topic1)
-                .addTopic(topic2)
-                .addTopic(topic3);
+                .addTopic(topic_1_1)
+                .addTopic(topic_1_2)
+                .addTopic(topic_1_3);
         tutoringOfferService.save(tutoringOffer1);
+
+        TutoringOffer tutoringOffer2 = new TutoringOffer()
+                .withStartTime(new Date())
+                .withEndTime(new Date())
+                .withCapacity(4)
+                .withDescription("Tutoria de programacion 1")
+                .withTutor(tutor3)
+                .withCourse(course3)
+                .withUniversity(university1)
+                .addTopic(topic_3_1)
+                .addTopic(topic_3_2)
+                .addTopic(topic_3_3);
+        tutoringOfferService.save(tutoringOffer2);
 
         return "Datos creados correctamente";
     }

@@ -33,6 +33,7 @@ public class CoursesController {
     @Autowired
     private UniversityConverter universityConverter;
 
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CourseDTO>> findAll() {
         try {
@@ -48,6 +49,7 @@ public class CoursesController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<CourseDTO> findById(

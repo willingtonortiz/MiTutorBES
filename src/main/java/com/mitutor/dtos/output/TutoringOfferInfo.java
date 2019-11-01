@@ -1,6 +1,4 @@
-package com.mitutor.converters.Output;
-
-import com.mitutor.entities.TutoringOffer;
+package com.mitutor.dtos.output;
 
 import java.io.Serializable;
 import java.util.Date;

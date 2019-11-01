@@ -34,6 +34,9 @@ public class Person implements Serializable {
     @Column(name = "lastname", nullable = false, length = 50)
     private String lastName;
 
+    @Column(name = "career", nullable = false, length = 50)
+    private String career;
+
     @Column(name = "semester", nullable = false)
     private Integer semester;
 
@@ -67,6 +70,66 @@ public class Person implements Serializable {
         this.name = name;
         this.lastName = lastname;
         this.semester = semester;
+    }
+
+    public Person withId(Integer id) {
+        this.setId(id);
+        return this;
+    }
+
+    public Person withName(String name) {
+        this.setName(name);
+        return this;
+    }
+
+    public Person withLastname(String lastname) {
+        this.setLastName(lastname);
+        return this;
+    }
+
+    public Person withCareer(String career) {
+        this.setCareer(career);
+        return this;
+    }
+
+    public Person withSemester(Integer semester) {
+        this.setSemester(semester);
+        return this;
+    }
+
+    public Person withUniversity(University university) {
+        this.setUniversity(university);
+        return this;
+    }
+
+    public Person withUser(User user) {
+        this.setUser(user);
+        return this;
+    }
+
+    public Person withStudent(Student student) {
+        this.setStudent(student);
+        return this;
+    }
+
+    public Person withTutor(Tutor tutor) {
+        this.setTutor(tutor);
+        return this;
+    }
+
+    public Person addReceivedQualification(Qualification qualification) {
+        this.receivedQualifications.add(qualification);
+        return this;
+    }
+
+    public Person addGivenQualification(Qualification qualification) {
+        this.givenQualifications.add(qualification);
+        return this;
+    }
+
+    public Person addSuscription(Suscription suscription) {
+        this.suscriptions.add(suscription);
+        return this;
     }
 
     public String getFullname() {
@@ -161,4 +224,11 @@ public class Person implements Serializable {
         this.suscriptions = suscriptions;
     }
 
+    public String getCareer() {
+        return career;
+    }
+
+    public void setCareer(String career) {
+        this.career = career;
+    }
 }
