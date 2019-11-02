@@ -30,64 +30,68 @@ import io.swagger.annotations.ApiResponses;
 @Api(tags = "Register", value = "Web Service RESTfull for register")
 public class RegisterController {
 
-	@Autowired
-	private IUniversityService uniService;
+    @Autowired
+    private IUniversityService universityService;
+    @Autowired
+    private IUserRegisterService userRegisterService;
 
-	@Autowired
-	private IUserRegisterService userRegisterService;
+    @ApiOperation(value = "Register user", notes = "Method create a new user")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User created successfully"),
+            @ApiResponse(code = 404, message = "University not found"),
+            @ApiResponse(code = 500, message = "Internal server error")})
+    @PostMapping(
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<UserRegisterResponse> register(
+            @RequestBody() CreateUserInput createUser
+    ) {
+        try {
+            Optional<University> foundUniversity = universityService.findById(createUser.getUniversityId());
 
-	@ApiOperation(value = "Register user", notes = "Method create a new user")
-	@ApiResponses({ @ApiResponse(code = 200, message = "User created sucessfully"),
-			@ApiResponse(code = 404, message = "University not found"),
-			@ApiResponse(code = 500, message = "Internal server error") })
-	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserRegisterResponse> create(@RequestBody() CreateUserInput createUser) {
+            if (!foundUniversity.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
 
-		try {
-			Optional<University> universityFound = uniService.findById(createUser.getUniversityId());
+            Person newPerson = new Person()
+                    .withName(createUser.getName())
+                    .withLastname(createUser.getLastName())
+                    .withSemester(createUser.getSemester())
+                    .withCareer(createUser.getCareer())
+                    .withUniversity(foundUniversity.get());
 
-			if (!universityFound.isPresent()) {
-				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-			}
+            Student newStudent = new Student()
+                    .withPoints(0.00f)
+                    .withQualificationCount(0);
 
-			Person newPerson = new Person();
-			newPerson.setName(createUser.getName());
-			newPerson.setLastName(createUser.getLastName());
-			newPerson.setSemester(createUser.getSemester());
-			newPerson.setCareer(createUser.getCareer());
-			newPerson.setUniversity(universityFound.get());
+            User newUser = new User()
+                    .withUsername(createUser.getUsername())
+                    .withPassword(createUser.getPassword())
+                    .withEmail(createUser.getEmail())
+                    .withRole("student");
 
-			Student newStudent = new Student();
-			newStudent.setPoints((float) 0.00);
-			newStudent.setQualificationCount(0);
+            newPerson.setUser(newUser);
+            newUser.setPerson(newPerson);
 
-			User newUser = new User(createUser.getUsername(), createUser.getPassword(), createUser.getEmail(),
-					"student");
+            newPerson.setStudent(newStudent);
+            newStudent.setPerson(newPerson);
 
-			newPerson.setUser(newUser);
-			newUser.setPerson(newPerson);
+            User userResult = userRegisterService.register(newPerson, newStudent, newUser);
 
-			newPerson.setStudent(newStudent);
-			newStudent.setPerson(newPerson);
+            UserRegisterResponse userResponse = new UserRegisterResponse()
+                    .withId(userResult.getId())
+                    .withEmail(userResult.getEmail())
+                    .withUsername(userResult.getUsername())
+                    .withRole(userResult.getRole());
+            
+            return new ResponseEntity<>(userResponse, HttpStatus.OK);
 
-			User userResult = userRegisterService.register(newPerson, newStudent, newUser);
-			
-		
-			UserRegisterResponse userResponse = new UserRegisterResponse();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
 
-			userResponse.setId(userResult.getId());
-			userResponse.setEmail(userResult.getEmail());
-			userResponse.setUsername(userResult.getUsername());
-			userResponse.setPassword(userResult.getPassword());
-			userResponse.setRole(userResult.getRole());
-
-			return new ResponseEntity<>(userResponse, HttpStatus.OK);
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-
-	}
+    }
 }

@@ -29,7 +29,6 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-
     @ApiOperation(value = "Register tutor", notes = "Method create a new tutor")
     @ApiResponses({@ApiResponse(code = 200, message = "Tutor created sucessfully"),
             @ApiResponse(code = 404, message = "User not found"),
