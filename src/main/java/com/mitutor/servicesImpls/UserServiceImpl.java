@@ -52,24 +52,6 @@ public class UserServiceImpl implements IUserService {
         return userRepository.findByUsername(username);
     }
 
-    @Override
-    public Tutor subscription(CreateTutorInput createTutorInput) throws Exception {
-        Optional<User> foundUser = this.findById(createTutorInput.getUserId());
 
-        if (!foundUser.isPresent()) {
-            return null;
-        }
-        foundUser.get().setRole("TUTOR");
-        userRepository.save(foundUser.get());
-
-        Tutor newTutor = new Tutor()
-                .withQualificationCount(0)
-                .withPoints(0.0)
-                .withPerson(foundUser.get().getPerson())
-                .withDescription("Nuevo tutor")
-                .withStatus("AVAILABLE");
-
-        return tutorRepository.save(newTutor);
-    }
 
 }
