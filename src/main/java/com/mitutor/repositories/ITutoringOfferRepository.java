@@ -10,4 +10,6 @@ import java.util.List;
 @Repository
 public interface ITutoringOfferRepository extends JpaRepository<TutoringOffer, Integer> {
     List<TutoringOffer> findAllByUniversityIdAndCourseId(Integer universityId, Integer courseId);
+
+    List<TutoringOffer> findAllByTutorId(Integer tutorId);
 }

@@ -45,4 +45,9 @@ public class TutoringOfferServiceImpl implements ITutoringOfferService {
     public List<TutoringOffer> findAllByUniversityIdAndCourseId(Integer universityId, Integer courseId) {
         return tutoringOfferRepository.findAllByUniversityIdAndCourseId(universityId, courseId);
     }
+
+    @Override
+    public List<TutoringOffer> findAllByTutorId(Integer tutorId) {
+        return tutoringOfferRepository.findAllByTutorId(tutorId);
+    }
 }

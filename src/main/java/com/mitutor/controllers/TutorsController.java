@@ -2,14 +2,19 @@ package com.mitutor.controllers;
 
 import com.mitutor.converters.CourseConverter;
 import com.mitutor.converters.TutorConverter;
+import com.mitutor.converters.TutoringOfferConverter;
 import com.mitutor.dtos.CourseDTO;
 import com.mitutor.dtos.TutorDTO;
+import com.mitutor.dtos.TutoringOfferDTO;
+import com.mitutor.dtos.output.TutoringOfferInfo;
 import com.mitutor.entities.Course;
 import com.mitutor.entities.Tutor;
 import com.mitutor.entities.TutorCourse;
+import com.mitutor.entities.TutoringOffer;
 import com.mitutor.services.ICourseService;
 import com.mitutor.services.ITutorCourseService;
 import com.mitutor.services.ITutorService;
+import com.mitutor.services.ITutoringOfferService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +22,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.print.attribute.standard.Media;
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -28,15 +35,19 @@ import java.util.stream.Collectors;
 public class TutorsController {
 
     @Autowired
-    private TutorConverter tutorConverter;
-    @Autowired
     private ITutorService tutorService;
     @Autowired
     private ICourseService courseService;
     @Autowired
+    private ITutorCourseService tutorCourseService;
+    @Autowired
+    private ITutoringOfferService tutoringOfferService;
+    @Autowired
+    private TutorConverter tutorConverter;
+    @Autowired
     private CourseConverter courseConverter;
     @Autowired
-    private ITutorCourseService tutorCourseService;
+    private TutoringOfferConverter tutoringOfferConverter;
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -54,6 +65,31 @@ public class TutorsController {
             return new ResponseEntity<List<TutorDTO>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    @GetMapping(value = "{tutorId}/tutoringoffers", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TutoringOfferInfo>> findTutoringOffersByTutorId(@PathVariable("tutorId") Integer tutorId) {
+        try {
+            Optional<Tutor> optionalTutor = tutorService.findById(tutorId);
+
+            if (!optionalTutor.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            List<TutoringOffer> tutoringOffers = tutoringOfferService.findAllByTutorId(tutorId);
+
+            List<TutoringOfferInfo> tutoringOffersInfo = tutoringOffers
+                    .stream()
+                    .map(x -> new TutoringOfferInfo().withCourseName(x.getCourse().getName())
+                            .withId(x.getId()))
+                    .collect(Collectors.toList());
+
+            return ResponseEntity.ok(tutoringOffersInfo);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 
     @GetMapping(
             value = "/{tutorId}/courses",

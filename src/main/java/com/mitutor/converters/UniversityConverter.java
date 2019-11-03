@@ -2,15 +2,15 @@ package com.mitutor.converters;
 
 import org.springframework.stereotype.Component;
 
-import com.mitutor.dtos.UniversityDto;
+import com.mitutor.dtos.UniversityDTO;
 import com.mitutor.entities.University;
 
 
 @Component
-public class UniversityConverter implements IConverter<University, UniversityDto> {
+public class UniversityConverter implements IConverter<University, UniversityDTO> {
 
 	@Override
-	public University fromDto(UniversityDto entity) {
+	public University fromDto(UniversityDTO entity) {
 		University university = new University();
 		university.setId(entity.getId());
 		university.setName(entity.getName());
@@ -19,8 +19,8 @@ public class UniversityConverter implements IConverter<University, UniversityDto
 	}
 
 	@Override
-	public UniversityDto fromEntity(University dto) {
-		UniversityDto universityDto = new UniversityDto();
+	public UniversityDTO fromEntity(University dto) {
+		UniversityDTO universityDto = new UniversityDTO();
 		universityDto.setId(dto.getId());
 		universityDto.setName(dto.getName());
 

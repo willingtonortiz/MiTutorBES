@@ -1,11 +1,11 @@
 package com.mitutor.dtos;
 
-public class AuthUserDto {
+public class AuthUserDTO {
 	private String username;
 	private String password;
 	private String token;
 
-	public AuthUserDto() {
+	public AuthUserDTO() {
 
 	}
 

@@ -1,6 +1,9 @@
 package com.mitutor.controllers;
 
+import com.mitutor.converters.UniversityConverter;
+import com.mitutor.dtos.UniversityDTO;
 import com.mitutor.dtos.UserDTO;
+import com.mitutor.entities.University;
 import com.mitutor.entities.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,7 +21,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -31,6 +33,28 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private UniversityConverter universityConverter;
+
+
+    @GetMapping(value = "/{userId}/university", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UniversityDTO> findUniversityByUserId(@PathVariable("userId") Integer userId) {
+        try {
+            Optional<User> optionalUser = userService.findById(userId);
+
+            if (!optionalUser.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            User user = optionalUser.get();
+
+            University university = user.getPerson().getUniversity();
+
+            return ResponseEntity.ok(universityConverter.fromEntity(university));
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

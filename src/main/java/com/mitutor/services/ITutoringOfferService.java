@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface ITutoringOfferService extends ICrudService<TutoringOffer> {
     List<TutoringOffer> findAllByUniversityIdAndCourseId(Integer universityId, Integer courseId);
+
+    List<TutoringOffer> findAllByTutorId(Integer tutorId);
 }

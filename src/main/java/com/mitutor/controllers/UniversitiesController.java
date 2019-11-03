@@ -11,7 +11,6 @@ import com.mitutor.dtos.output.TutoringOfferInfo;
 import com.mitutor.converters.TutorConverter;
 import com.mitutor.converters.TutoringOfferConverter;
 import com.mitutor.dtos.CourseDTO;
-import com.mitutor.dtos.TutorDTO;
 import com.mitutor.entities.Course;
 import com.mitutor.entities.Tutor;
 import com.mitutor.entities.TutoringOffer;
@@ -29,7 +28,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.mitutor.converters.UniversityConverter;
-import com.mitutor.dtos.UniversityDto;
+import com.mitutor.dtos.UniversityDTO;
 import com.mitutor.entities.University;
 import com.mitutor.services.IUniversityService;
 
@@ -66,19 +65,19 @@ public class UniversitiesController {
             @ApiResponse(code = 500, message = "Internal server error")
     })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<UniversityDto>> findAll() {
+    public ResponseEntity<List<UniversityDTO>> findAll() {
         try {
             List<University> universities = universityService.findAll();
 
-            List<UniversityDto> universitiesDto = universities
+            List<UniversityDTO> universitiesDto = universities
                     .stream()
                     .map(x -> universityConverter.fromEntity(x))
                     .collect(Collectors.toList());
 
-            return new ResponseEntity<List<UniversityDto>>(universitiesDto, HttpStatus.OK);
+            return new ResponseEntity<List<UniversityDTO>>(universitiesDto, HttpStatus.OK);
         } catch (Exception e) {
 //            System.out.println(e.getMessage());
-            return new ResponseEntity<List<UniversityDto>>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<List<UniversityDTO>>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     //endregion

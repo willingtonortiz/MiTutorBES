@@ -84,7 +84,8 @@ public class JwtAuthenticationController {
                     .withEmail(user.getEmail())
                     .withUsername(user.getUsername())
                     .withRole(user.getRole())
-                    .withToken(token);
+                    .withToken(token)
+                    .withName(user.getPerson().getName());
 
             return ResponseEntity.ok(authenticatedUserOutput);
         } catch (Exception e) {

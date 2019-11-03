@@ -1,15 +1,15 @@
 package com.mitutor.dtos;
 
-public class UniversityDto {
+public class UniversityDTO {
 
 	private Integer id;
 	private String name;
 
-	public UniversityDto() {
+	public UniversityDTO() {
 
 	}
 
-	public UniversityDto(String name) {
+	public UniversityDTO(String name) {
 		this.name = name;
 	}
 

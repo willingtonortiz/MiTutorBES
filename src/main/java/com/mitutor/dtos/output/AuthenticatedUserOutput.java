@@ -10,6 +10,7 @@ public class AuthenticatedUserOutput implements Serializable {
     private String email;
     private String role;
     private String token;
+    private String name;
 
     public AuthenticatedUserOutput() {
     }
@@ -36,6 +37,11 @@ public class AuthenticatedUserOutput implements Serializable {
 
     public AuthenticatedUserOutput withToken(String token) {
         this.setToken(token);
+        return this;
+    }
+
+    public AuthenticatedUserOutput withName(String name){
+        this.setName(name);
         return this;
     }
 
@@ -77,5 +83,13 @@ public class AuthenticatedUserOutput implements Serializable {
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
