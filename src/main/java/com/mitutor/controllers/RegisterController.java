@@ -75,7 +75,7 @@ public class RegisterController {
                     .withUsername(createUser.getUsername())
                     .withPassword(encodedPassword)
                     .withEmail(createUser.getEmail())
-                    .withRole("STUDENT");
+                    .withRole("student");
 
             newPerson.setUser(newUser);
             newUser.setPerson(newPerson);

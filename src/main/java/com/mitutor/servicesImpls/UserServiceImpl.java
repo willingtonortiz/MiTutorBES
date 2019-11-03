@@ -19,8 +19,7 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private IUserRepository userRepository;
 
-    @Autowired
-    private ITutorRepository tutorRepository;
+
 
     @Override
     public Optional<User> findById(Integer id) throws Exception {
