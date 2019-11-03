@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/MiTutorBES
     username: postgres
-    password: jair96
+    password: postgresql
     driver-class-name: org.postgresql.Driver
   jpa:
     database: postgresql
@@ -15,5 +15,5 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
-jwt.secret:
-  mitutoraos
+
+jwt.secret: mitutoraos

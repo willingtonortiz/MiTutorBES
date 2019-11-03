@@ -2,14 +2,14 @@ package com.mitutor.dtos.input;
 
 public class CreateUserInput {
 
-    public String username;
-    public String password;
-    public String email;
-    public String name;
-    public String lastName;
-    public Integer semester;
-    public Integer universityId;
-    public String career;
+    private String username;
+    private String password;
+    private String email;
+    private String name;
+    private String lastName;
+    private Integer semester;
+    private Integer universityId;
+    private String career;
 
     public CreateUserInput() {
     }

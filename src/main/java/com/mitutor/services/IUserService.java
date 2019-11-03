@@ -7,6 +7,8 @@ import com.mitutor.entities.Tutor;
 import com.mitutor.entities.User;
 
 public interface IUserService extends ICrudService<User> {
-	
-	Tutor subscription(CreateTutorInput createTutorInput) throws Exception;
+
+    Optional<User> findByUsername(String username) throws Exception;
+
+    Tutor subscription(CreateTutorInput createTutorInput) throws Exception;
 }

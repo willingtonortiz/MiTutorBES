@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,6 +35,8 @@ public class RegisterController {
     private IUniversityService universityService;
     @Autowired
     private IUserRegisterService userRegisterService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @ApiOperation(value = "Register user", notes = "Method create a new user")
     @ApiResponses({
@@ -65,11 +68,14 @@ public class RegisterController {
                     .withPoints(0.00f)
                     .withQualificationCount(0);
 
+            // Encoding password
+            String encodedPassword = passwordEncoder.encode(createUser.getPassword());
+
             User newUser = new User()
                     .withUsername(createUser.getUsername())
-                    .withPassword(createUser.getPassword())
+                    .withPassword(encodedPassword)
                     .withEmail(createUser.getEmail())
-                    .withRole("student");
+                    .withRole("STUDENT");
 
             newPerson.setUser(newUser);
             newUser.setPerson(newPerson);
@@ -84,12 +90,12 @@ public class RegisterController {
                     .withEmail(userResult.getEmail())
                     .withUsername(userResult.getUsername())
                     .withRole(userResult.getRole());
-            
+
             return new ResponseEntity<>(userResponse, HttpStatus.OK);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+
+//            e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
 

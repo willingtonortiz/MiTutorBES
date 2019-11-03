@@ -1,4 +1,4 @@
- package com.mitutor.servicesImpls;
+package com.mitutor.servicesImpls;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,64 +16,60 @@ import com.mitutor.services.IUserService;
 @Service
 public class UserServiceImpl implements IUserService {
 
-	@Autowired
-	private IUserRepository userRepository;
-	
-	@Autowired
-	private ITutorRepository tutorRepository;
+    @Autowired
+    private IUserRepository userRepository;
 
-	@Override
-	public Optional<User> findById(Integer id) throws Exception {
-		return userRepository.findById(id);
-	}
+    @Autowired
+    private ITutorRepository tutorRepository;
 
-	@Override
-	public List<User> findAll() throws Exception {
-		return userRepository.findAll();
-	}
+    @Override
+    public Optional<User> findById(Integer id) throws Exception {
+        return userRepository.findById(id);
+    }
 
-	@Override
-	public User save(User t) throws Exception {
-		return userRepository.save(t);
-	}
+    @Override
+    public List<User> findAll() throws Exception {
+        return userRepository.findAll();
+    }
 
-	@Override
-	public void deleteById(Integer id) throws Exception {
-		userRepository.deleteById(id);
-	}
+    @Override
+    public User save(User t) throws Exception {
+        return userRepository.save(t);
+    }
 
-	@Override
-	public void deleteAll() throws Exception {
-		userRepository.deleteAll();
-	}
+    @Override
+    public void deleteById(Integer id) throws Exception {
+        userRepository.deleteById(id);
+    }
 
-	@Override
-	public Tutor subscription(CreateTutorInput createTutorInput) throws Exception{
-		Optional<User> foundUser = this.findById(createTutorInput.getUserId());
-		
-		if(!foundUser.isPresent()) {
-			return null;
-		}
-		foundUser.get().setRole("tutor");
-		userRepository.save(foundUser.get());
-		
-		Tutor newTutor  =  new Tutor();
-		
-		
-		newTutor.withQualificationCount(0);
-		newTutor.withPoints(0.0);
-		newTutor.withPerson(foundUser.get().getPerson());
-		newTutor.withDescription("Nuevo tutor");
-		newTutor.withStatus("AVAILABLE");
-		
-		
-		
-		
-		
+    @Override
+    public void deleteAll() throws Exception {
+        userRepository.deleteAll();
+    }
 
-		
-		return tutorRepository.save(newTutor);
-		
-	}
+    @Override
+    public Optional<User> findByUsername(String username) throws Exception {
+        return userRepository.findByUsername(username);
+    }
+
+    @Override
+    public Tutor subscription(CreateTutorInput createTutorInput) throws Exception {
+        Optional<User> foundUser = this.findById(createTutorInput.getUserId());
+
+        if (!foundUser.isPresent()) {
+            return null;
+        }
+        foundUser.get().setRole("TUTOR");
+        userRepository.save(foundUser.get());
+
+        Tutor newTutor = new Tutor()
+                .withQualificationCount(0)
+                .withPoints(0.0)
+                .withPerson(foundUser.get().getPerson())
+                .withDescription("Nuevo tutor")
+                .withStatus("AVAILABLE");
+
+        return tutorRepository.save(newTutor);
+    }
 
 }

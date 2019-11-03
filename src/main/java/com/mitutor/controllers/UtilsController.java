@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,6 +45,8 @@ public class UtilsController {
     private ITutorCourseService tutorCourseService;
     @Autowired
     private IUserRegisterService userRegService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("create")
     public String generateData() throws Exception {
@@ -111,7 +114,7 @@ public class UtilsController {
         // Creating users
         User user1 = new User()
                 .withUsername("username_1")
-                .withPassword("password_1")
+                .withPassword(passwordEncoder.encode("password_1"))
                 .withEmail("email1@email1.com")
                 .withRole(RoleType.TUTOR)
                 .withPerson(person1);
@@ -119,7 +122,7 @@ public class UtilsController {
 
         User user2 = new User()
                 .withUsername("username_2")
-                .withPassword("password_2")
+                .withPassword(passwordEncoder.encode("password_2"))
                 .withEmail("email2@email2.com")
                 .withRole(RoleType.TUTOR)
                 .withPerson(person2);
@@ -127,7 +130,7 @@ public class UtilsController {
 
         User user3 = new User()
                 .withUsername("username_3")
-                .withPassword("password_3")
+                .withPassword(passwordEncoder.encode("password_3"))
                 .withEmail("email3@email3.com")
                 .withRole(RoleType.TUTOR)
                 .withPerson(person3);
@@ -220,9 +223,7 @@ public class UtilsController {
             // TODO Auto-generated catch block
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
         }
-
     }
 
     @ApiOperation(value = "Find user by email", notes = "Method for validate email if is available or not")
@@ -241,12 +242,8 @@ public class UtilsController {
             return new ResponseEntity<String>("El email ya existe", HttpStatus.FOUND);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-
         }
-
     }
-
 }

@@ -1,53 +1,92 @@
 package com.mitutor.controllers;
 
+import com.mitutor.dtos.input.LoginUserInput;
+import com.mitutor.dtos.output.AuthenticatedUserOutput;
+import com.mitutor.entities.User;
+import com.mitutor.enums.RoleType;
+import com.mitutor.services.IUserService;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.MediaTypeEditor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.DisabledException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.mitutor.config.JwtTokenUtil;
-import com.mitutor.models.JwtRequest;
-import com.mitutor.models.JwtResponse;
-import com.mitutor.services.JwtUserDetailsService;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @RestController
-@CrossOrigin
+@RequestMapping("api/authentication")
+@Api(tags = "Authentication", value = "Web Service RESTfull for authentication")
 public class JwtAuthenticationController {
 
     @Autowired
-    private AuthenticationManager authenticationManager;
+    private IUserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
+    /*
+    @Autowired
+    private AuthenticationManager authenticationManager;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
-
     @Autowired
     private JwtUserDetailsService userDetailsService;
+
+    //region Authenticate
+    private void authenticate(String username, String password) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
+        } catch (DisabledException e) {
+            System.out.println("disabled");
+            throw new Exception("USER_DISABLED", e);
+        } catch (BadCredentialsException e) {
+            System.out.println("invalid");
+            throw new Exception("INVALID_CREDENTIALS", e);
+        }
+    }
+    //endregion
+    */
 
 
     //region CreateAuthenticationToken
     @PostMapping(
-            value = "/authenticate",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<?> createAuthenticationToken(
-            @RequestBody JwtRequest authenticationRequest
-    ) throws Exception {
+    public ResponseEntity<AuthenticatedUserOutput> createAuthenticationToken(
+            @RequestBody LoginUserInput loginUserInput
+    ) {
         try {
-            authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+            Optional<User> foundUser = userService.findByUsername(loginUserInput.getUsername());
 
-            final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+            if (!foundUser.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            User user = foundUser.get();
 
-            final String token = jwtTokenUtil.generateToken(userDetails);
+            if (!passwordEncoder.matches(loginUserInput.getPassword(), user.getPassword())) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
 
-            return ResponseEntity.ok(new JwtResponse(token));
+            String token = generateJWTToken(user.getUsername(), user.getRole());
+
+            AuthenticatedUserOutput authenticatedUserOutput = new AuthenticatedUserOutput()
+                    .withId(user.getId())
+                    .withEmail(user.getEmail())
+                    .withUsername(user.getUsername())
+                    .withRole(user.getRole())
+                    .withToken(token);
+
+            return ResponseEntity.ok(authenticatedUserOutput);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -55,16 +94,24 @@ public class JwtAuthenticationController {
     //endregion
 
 
-    //region Authenticate
-    private void authenticate(String username, String password) throws Exception {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
-        } catch (DisabledException e) {
-            throw new Exception("USER_DISABLED", e);
-        } catch (BadCredentialsException e) {
-            throw new Exception("INVALID_CREDENTIALS", e);
-        }
-    }
-    //endregion
+    private String generateJWTToken(String username, String role) {
+        String secretKey = "mitutoraos";
 
+        List<GrantedAuthority> grantedAuthorities = AuthorityUtils
+                .commaSeparatedStringToAuthorityList(role);
+
+        String token = Jwts
+                .builder()
+                .setId("softtekJWT")
+                .setSubject(username)
+                .claim(
+                        "authorities",
+                        grantedAuthorities.stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList())
+                )
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 600000))
+                .signWith(SignatureAlgorithm.HS512, secretKey.getBytes()).compact();
+
+        return "Bearer " + token;
+    }
 }

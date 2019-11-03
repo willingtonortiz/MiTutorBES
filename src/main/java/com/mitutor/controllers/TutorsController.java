@@ -93,12 +93,10 @@ public class TutorsController {
             if (!foundCourse.isPresent()) {
                 return new ResponseEntity<>(2, HttpStatus.NOT_FOUND);
             }
-//            System.out.println("flag 1");
             if (!foundTutor.isPresent()) {
                 return new ResponseEntity<>(3, HttpStatus.NOT_FOUND);
             }
 
-//            System.out.println("flag 2");
             Course course = foundCourse.get();
             Tutor tutor = foundTutor.get();
 
@@ -108,8 +106,6 @@ public class TutorsController {
                 if (item.getId().equals(course.getId()))
                     return new ResponseEntity<>(4, HttpStatus.BAD_REQUEST);
             }
-
-//            System.out.println("flag 3");
 
             tutorCourseService.save(new TutorCourse().withTutor(tutor).withCourse(course));
             return new ResponseEntity<>(1, HttpStatus.OK);
