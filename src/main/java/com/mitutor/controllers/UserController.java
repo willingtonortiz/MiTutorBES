@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import com.mitutor.dtos.Responses.TutorRegisterResponse;
 import com.mitutor.dtos.input.CreateTutorInput;
 import com.mitutor.entities.Tutor;
+import com.mitutor.services.ITutorService;
 import com.mitutor.services.IUserService;
 
 import io.swagger.annotations.Api;
@@ -33,6 +34,8 @@ public class UserController {
 
     @Autowired
     private IUserService userService;
+    @Autowired
+    private ITutorService tutorService;
     @Autowired
     private UniversityConverter universityConverter;
 
@@ -108,7 +111,7 @@ public class UserController {
             @RequestBody() CreateTutorInput createTutorInput
     ) {
         try {
-            Tutor newTutor = userService.subscription(createTutorInput);
+            Tutor newTutor = tutorService.subscription(createTutorInput);
             if (newTutor == null) {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

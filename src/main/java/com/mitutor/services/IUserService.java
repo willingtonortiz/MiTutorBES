@@ -10,5 +10,4 @@ public interface IUserService extends ICrudService<User> {
 
     Optional<User> findByUsername(String username) throws Exception;
 
-    Tutor subscription(CreateTutorInput createTutorInput) throws Exception;
 }
