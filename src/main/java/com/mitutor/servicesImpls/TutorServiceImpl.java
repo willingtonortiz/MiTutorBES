@@ -66,8 +66,8 @@ public class TutorServiceImpl implements ITutorService {
 	                .withQualificationCount(0)
 	                .withPoints(0.0)
 	                .withPerson(foundUser.get().getPerson())
-	                .withDescription("Nuevo tutor")
-	                .withStatus("AVAILABLE");
+	                .withDescription("nuevo tutor")
+	                .withStatus("available");
 
 	        return tutorRepository.save(newTutor);
 	}
