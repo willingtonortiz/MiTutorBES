@@ -1,10 +1,13 @@
 package com.mitutor.controllers;
 
 import com.mitutor.converters.CourseConverter;
+import com.mitutor.converters.TopicConverter;
 import com.mitutor.converters.UniversityConverter;
 import com.mitutor.dtos.CourseDTO;
+import com.mitutor.dtos.TopicDTO;
 import com.mitutor.dtos.input.CreateCourseInput;
 import com.mitutor.entities.Course;
+import com.mitutor.entities.Topic;
 import com.mitutor.entities.University;
 import com.mitutor.services.ICourseService;
 import com.mitutor.services.IUniversityService;
@@ -16,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.xml.ws.Response;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -33,6 +37,8 @@ public class CoursesController {
     private CourseConverter courseConverter;
     @Autowired
     private UniversityConverter universityConverter;
+    @Autowired
+    private TopicConverter topicConverter;
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -114,6 +120,32 @@ public class CoursesController {
             CourseDTO courseDTO = courseConverter.fromEntity(foundCourse.get());
 
             return new ResponseEntity<>(courseDTO, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
+    @GetMapping(value = "/{id}/topics", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<TopicDTO>> findTopic(
+            @PathVariable("id") Integer id
+    ) {
+        try {
+            List<Topic> foundTopics = courseService.findTopics(id);
+
+            if (foundTopics == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            List<TopicDTO> topicsDTO = new ArrayList<>();
+
+            for(int i =0; i<foundTopics.size();++i){
+                topicsDTO.add(topicConverter.fromEntity(foundTopics.get(i)));
+            }
+
+            return new ResponseEntity<>(topicsDTO, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

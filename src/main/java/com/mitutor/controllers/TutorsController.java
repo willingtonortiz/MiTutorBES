@@ -7,10 +7,7 @@ import com.mitutor.dtos.CourseDTO;
 import com.mitutor.dtos.TutorDTO;
 import com.mitutor.dtos.TutoringOfferDTO;
 import com.mitutor.dtos.output.TutoringOfferInfo;
-import com.mitutor.entities.Course;
-import com.mitutor.entities.Tutor;
-import com.mitutor.entities.TutorCourse;
-import com.mitutor.entities.TutoringOffer;
+import com.mitutor.entities.*;
 import com.mitutor.services.ICourseService;
 import com.mitutor.services.ITutorCourseService;
 import com.mitutor.services.ITutorService;
@@ -150,4 +147,26 @@ public class TutorsController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+
+
+    @GetMapping(
+            value = "/{tutorId}/university",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<Integer> findUniversity(
+            @PathVariable("tutorId") Integer tutorId
+    ) {
+        try {
+            University university = tutorService.findUniversity(tutorId);
+            return new ResponseEntity<>(university.getId(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
+
+
 }

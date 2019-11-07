@@ -1,6 +1,7 @@
 package com.mitutor.services;
 
 import com.mitutor.entities.Course;
+import com.mitutor.entities.Topic;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,4 +12,7 @@ public interface ICourseService extends ICrudService<Course> {
     List<Course> findAllByUniversityId(Integer universityId);
 
     List<Course> findAllByTutorId(Integer tutorId);
+
+    List<Topic> findTopics(Integer courseId) throws Exception;
+
 }
