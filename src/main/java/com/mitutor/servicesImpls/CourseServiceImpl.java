@@ -3,6 +3,7 @@ package com.mitutor.servicesImpls;
 import java.util.List;
 import java.util.Optional;
 
+import com.mitutor.entities.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,5 +61,10 @@ public class CourseServiceImpl implements ICourseService {
     @Override
     public List<Course> findAllByTutorId(Integer tutorId) {
         return courseRepository.findAllByTutorCoursesTutorId(tutorId);
+    }
+
+    @Override
+    public List<Topic> findTopics(Integer courseId) throws Exception {
+        return courseRepository.findById(courseId).get().getTopics();
     }
 }

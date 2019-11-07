@@ -1,5 +1,6 @@
 package com.mitutor.repositories;
 
+import com.mitutor.entities.University;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,5 +18,10 @@ public interface ITutorRepository extends JpaRepository<Tutor, Integer> {
     List<Tutor> findAllByUniversityIdAndCourseId(
             @Param("universityId") int universityId,
             @Param("courseId") int courseId
+    );
+
+    @Query(value = "SELECT u FROM University u WHERE  u.id = (SELECT p.university.id FROM Person p WHERE p.id = :tutorId)")
+    public University findUniversity(
+            @Param("tutorId") int tutorId
     );
 }

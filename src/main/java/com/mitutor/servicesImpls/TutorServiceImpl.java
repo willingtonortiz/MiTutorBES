@@ -3,6 +3,7 @@ package com.mitutor.servicesImpls;
 import java.util.List;
 import java.util.Optional;
 
+import com.mitutor.entities.University;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ import com.mitutor.entities.User;
 import com.mitutor.repositories.ITutorRepository;
 import com.mitutor.repositories.IUserRepository;
 import com.mitutor.services.ITutorService;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TutorServiceImpl implements ITutorService {
@@ -71,4 +73,10 @@ public class TutorServiceImpl implements ITutorService {
 
 	        return tutorRepository.save(newTutor);
 	}
+
+    @Transactional(readOnly = true)
+    @Override
+    public University findUniversity(Integer tutorId) throws Exception {
+        return tutorRepository.findUniversity(tutorId);
+    }
 }
