@@ -122,7 +122,7 @@ public class TutorsController {
             @RequestBody() Integer courseId
     ) {
         try {
-            System.out.println(tutorId + " " + courseId);
+            // System.out.println(tutorId + " " + courseId);
             Optional<Course> foundCourse = courseService.findById(courseId);
             Optional<Tutor> foundTutor = tutorService.findById(tutorId);
 
