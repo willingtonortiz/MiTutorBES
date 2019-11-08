@@ -9,6 +9,9 @@ import com.mitutor.entities.Topic;
 import com.mitutor.services.ICourseService;
 import com.mitutor.services.ITopicService;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,7 +26,6 @@ import java.util.stream.Collectors;
 @RequestMapping("api/topics")
 @Api(tags = "Topic", value = "")
 public class TopicController {
-
     @Autowired
     private ITopicService topicService;
     @Autowired
@@ -33,7 +35,11 @@ public class TopicController {
     @Autowired
     private CourseConverter courseConverter;
 
-
+    @ApiOperation(value = "Find all", notes = "Retrieves all topics from database")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Topics retrieved successfully"),
+            @ApiResponse(code = 500, message = "Internal server error")
+    })
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<TopicDTO>> findAll() {
         try {
@@ -51,6 +57,12 @@ public class TopicController {
     }
 
 
+    @ApiOperation(value = "Find topic by id", notes = "Find a topic by its id")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Topic retrieved successfully"),
+            @ApiResponse(code = 404, message = "Topic not found"),
+            @ApiResponse(code = 500, message = "Internal server error")
+    })
     @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TopicDTO> findById(
             @PathVariable("id") Integer id
@@ -71,7 +83,17 @@ public class TopicController {
         }
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+
+    @ApiOperation(value = "Creates a new topic", notes = "Creates a new topic")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Topic created successfully"),
+            @ApiResponse(code = 404, message = "Topic not found"),
+            @ApiResponse(code = 500, message = "Internal server error")
+    })
+    @PostMapping(
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
     public ResponseEntity<TopicDTO> create(
             @RequestBody() CreateTopicInput createTopic
     ) {
@@ -89,20 +111,24 @@ public class TopicController {
 
             TopicDTO topicDTO = topicConverter.fromEntity(newTopic);
 
-            return new ResponseEntity<>(topicDTO, HttpStatus.OK);
+            return new ResponseEntity<>(topicDTO, HttpStatus.CREATED);
 
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-
+    @ApiOperation(value = "Deletes a topic", notes = "Deletes a topic by its id")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Topic deleted successfully"),
+            @ApiResponse(code = 404, message = "Topic not found"),
+            @ApiResponse(code = 500, message = "Internal server error")
+    })
     @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<TopicDTO> delete(
             @PathVariable("id") Integer id
     ) {
         try {
-
             Optional<Topic> foundTopic = topicService.findById(id);
 
             if (!foundTopic.isPresent()) {
