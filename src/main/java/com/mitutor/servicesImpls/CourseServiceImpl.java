@@ -62,9 +62,4 @@ public class CourseServiceImpl implements ICourseService {
     public List<Course> findAllByTutorId(Integer tutorId) {
         return courseRepository.findAllByTutorCoursesTutorId(tutorId);
     }
-
-    @Override
-    public List<Topic> findTopics(Integer courseId) throws Exception {
-        return courseRepository.findById(courseId).get().getTopics();
-    }
 }

@@ -2,6 +2,7 @@ package com.mitutor.controllers;
 
 import java.util.Optional;
 
+import com.mitutor.enums.RoleType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -75,7 +76,7 @@ public class RegisterController {
                     .withUsername(createUser.getUsername())
                     .withPassword(encodedPassword)
                     .withEmail(createUser.getEmail())
-                    .withRole("student");
+                    .withRole(RoleType.STUDENT);
 
             newPerson.setUser(newUser);
             newUser.setPerson(newPerson);

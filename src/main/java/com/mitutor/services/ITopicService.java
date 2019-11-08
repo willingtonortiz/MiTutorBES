@@ -2,6 +2,8 @@ package com.mitutor.services;
 
 import com.mitutor.entities.Topic;
 
-public interface ITopicService extends ICrudService<Topic> {
+import java.util.List;
 
+public interface ITopicService extends ICrudService<Topic> {
+    List<Topic> findAllByCourseId(Integer courseId) throws Exception;
 }

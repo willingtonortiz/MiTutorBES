@@ -11,7 +11,7 @@ import com.mitutor.repositories.ITopicRepository;
 import com.mitutor.services.ITopicService;
 
 @Service
-public class TopiServiceImpl implements ITopicService {
+public class TopicServiceImpl implements ITopicService {
 
 	@Autowired
 	private ITopicRepository topicRepository;
@@ -41,4 +41,8 @@ public class TopiServiceImpl implements ITopicService {
 		topicRepository.deleteAll();
 	}
 
+	@Override
+	public List<Topic> findAllByCourseId(Integer courseId) throws Exception {
+		return topicRepository.findAllByCourseId(courseId);
+	}
 }

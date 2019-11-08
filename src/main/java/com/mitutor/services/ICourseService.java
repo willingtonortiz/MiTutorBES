@@ -12,7 +12,4 @@ public interface ICourseService extends ICrudService<Course> {
     List<Course> findAllByUniversityId(Integer universityId);
 
     List<Course> findAllByTutorId(Integer tutorId);
-
-    List<Topic> findTopics(Integer courseId) throws Exception;
-
 }

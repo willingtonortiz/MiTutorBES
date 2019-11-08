@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.mitutor.entities.University;
+import com.mitutor.enums.RoleType;
+import com.mitutor.enums.TutorStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,7 +63,7 @@ public class TutorServiceImpl implements ITutorService {
 	        if (!foundUser.isPresent()) {
 	            return null;
 	        }
-	        foundUser.get().setRole("tutor");
+	        foundUser.get().setRole(RoleType.TUTOR);
 	        this.userRepository.save(foundUser.get());
 
 	        Tutor newTutor = new Tutor()
@@ -69,7 +71,7 @@ public class TutorServiceImpl implements ITutorService {
 	                .withPoints(0.0)
 	                .withPerson(foundUser.get().getPerson())
 	                .withDescription("nuevo tutor")
-	                .withStatus("available");
+	                .withStatus(TutorStatus.AVAILABLE);
 
 	        return tutorRepository.save(newTutor);
 	}
