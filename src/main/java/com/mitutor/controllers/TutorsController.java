@@ -2,10 +2,8 @@ package com.mitutor.controllers;
 
 import com.mitutor.converters.CourseConverter;
 import com.mitutor.converters.TutorConverter;
-import com.mitutor.converters.TutoringOfferConverter;
 import com.mitutor.dtos.CourseDTO;
 import com.mitutor.dtos.TutorDTO;
-import com.mitutor.dtos.TutoringOfferDTO;
 import com.mitutor.dtos.output.TutoringOfferInfo;
 import com.mitutor.entities.*;
 import com.mitutor.services.ICourseService;
@@ -19,8 +17,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.print.attribute.standard.Media;
-import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -43,8 +39,6 @@ public class TutorsController {
     private TutorConverter tutorConverter;
     @Autowired
     private CourseConverter courseConverter;
-    @Autowired
-    private TutoringOfferConverter tutoringOfferConverter;
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

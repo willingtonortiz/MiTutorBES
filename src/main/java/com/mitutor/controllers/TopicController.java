@@ -1,6 +1,5 @@
 package com.mitutor.controllers;
 
-import com.mitutor.converters.CourseConverter;
 import com.mitutor.converters.TopicConverter;
 import com.mitutor.dtos.TopicDTO;
 import com.mitutor.dtos.input.CreateTopicInput;
@@ -32,8 +31,6 @@ public class TopicController {
     private ICourseService courseService;
     @Autowired
     private TopicConverter topicConverter;
-    @Autowired
-    private CourseConverter courseConverter;
 
     @ApiOperation(value = "Find all", notes = "Retrieves all topics from database")
     @ApiResponses({

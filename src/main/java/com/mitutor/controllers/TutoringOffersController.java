@@ -69,7 +69,6 @@ public class TutoringOffersController {
             }
 
         } catch (Exception e) {
-            // TODO: handle exception
             return new ResponseEntity<TutoringOfferResponse>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -100,7 +99,7 @@ public class TutoringOffersController {
             tutoringOffer = tutoringOfferService.save(tutoringOffer);
 
             TutoringSession tutoringSession = null;
-            Topic topic = null;
+            // Topic topic = null;
 
             HashSet<Topic> topics = new HashSet<>();
 

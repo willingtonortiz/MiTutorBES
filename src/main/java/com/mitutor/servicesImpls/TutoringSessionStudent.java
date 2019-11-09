@@ -17,35 +17,27 @@ public class TutoringSessionStudent implements ITutoringSessionStudentService{
 	
 	@Override
 	public Optional<TutoringSessionsStudent> findById(Integer id) throws Exception {
-		// TODO Auto-generated method stub
 		return tutoringSessionStudentRepository.findById(id);
 	}
 
 	@Override
 	public List<TutoringSessionsStudent> findAll() throws Exception {
-		// TODO Auto-generated method stub
 		return tutoringSessionStudentRepository.findAll();
 	}
 
 	@Override
 	public TutoringSessionsStudent save(TutoringSessionsStudent t) throws Exception {
-		// TODO Auto-generated method stub
 		return tutoringSessionStudentRepository.save(t);
 	}
 
 	@Override
 	public void deleteById(Integer id) throws Exception {
-		// TODO Auto-generated method stub
 		tutoringSessionStudentRepository.deleteById(id);
 		
 	}
 
 	@Override
 	public void deleteAll() throws Exception {
-		// TODO Auto-generated method stub
-		
 		tutoringSessionStudentRepository.deleteAll();
-		
 	}
-
 }

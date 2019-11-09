@@ -6,10 +6,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.mitutor.dtos.input.CreateTutorInput;
-import com.mitutor.entities.Tutor;
 import com.mitutor.entities.User;
-import com.mitutor.repositories.ITutorRepository;
 import com.mitutor.repositories.IUserRepository;
 import com.mitutor.services.IUserService;
 

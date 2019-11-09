@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 import com.mitutor.converters.CourseConverter;
 import com.mitutor.dtos.output.TutorInfo;
 import com.mitutor.dtos.output.TutoringOfferInfo;
-import com.mitutor.converters.TutorConverter;
-import com.mitutor.converters.TutoringOfferConverter;
 import com.mitutor.dtos.CourseDTO;
 import com.mitutor.entities.Course;
 import com.mitutor.entities.Tutor;
@@ -46,15 +44,10 @@ public class UniversitiesController {
     private ITutoringOfferService tutoringOfferService;
     @Autowired
     private ITutorService tutorService;
-
     @Autowired
     private UniversityConverter universityConverter;
     @Autowired
     private CourseConverter courseConverter;
-    @Autowired
-    private TutorConverter tutorConverter;
-    @Autowired
-    private TutoringOfferConverter tutoringOfferConverter;
     //endregion
 
 

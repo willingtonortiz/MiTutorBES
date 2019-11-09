@@ -1,17 +1,12 @@
 package com.mitutor.converters;
 
 import com.mitutor.dtos.Requests.TutoringOfferRequest;
-import com.mitutor.dtos.Requests.TutoringSessionsRequests;
 import com.mitutor.entities.TutoringOffer;
-import com.mitutor.entities.TutoringSession;
 import com.mitutor.services.ICourseService;
 import com.mitutor.services.ITutorService;
 import com.mitutor.services.IUniversityService;
-import com.mitutor.servicesImpls.CourseServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.ArrayList;
 
 @Component
 public class TutoringOfferRequestConverter implements IConverter<TutoringOffer, TutoringOfferRequest> {

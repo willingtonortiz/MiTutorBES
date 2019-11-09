@@ -1,7 +1,6 @@
 package com.mitutor.services;
 
 import com.mitutor.entities.Course;
-import com.mitutor.entities.Topic;
 
 import java.util.List;
 import java.util.Optional;

@@ -3,7 +3,6 @@ package com.mitutor.controllers;
 import com.mitutor.dtos.input.LoginUserInput;
 import com.mitutor.dtos.output.AuthenticatedUserOutput;
 import com.mitutor.entities.User;
-import com.mitutor.enums.RoleType;
 import com.mitutor.services.IUserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

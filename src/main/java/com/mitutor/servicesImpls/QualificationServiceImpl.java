@@ -4,12 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import com.mitutor.entities.Person;
 import com.mitutor.entities.Qualification;
-import com.mitutor.entities.Tutor;
 import com.mitutor.repositories.IQualificationRepository;
 import com.mitutor.services.IQualificationService;
 

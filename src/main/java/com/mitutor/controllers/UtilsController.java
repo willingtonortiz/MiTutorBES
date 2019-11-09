@@ -6,7 +6,6 @@ import java.util.Optional;
 import com.mitutor.entities.*;
 import com.mitutor.enums.TutorStatus;
 import com.mitutor.services.*;
-import com.mitutor.servicesImpls.UserRegisterServiceImpl;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -220,7 +219,6 @@ public class UtilsController {
             return new ResponseEntity<String>("User is not available", HttpStatus.FOUND);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

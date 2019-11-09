@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 
 import com.mitutor.entities.Person;
 import com.mitutor.entities.Qualification;
-import com.mitutor.entities.Tutor;
 
 import java.util.*;
 

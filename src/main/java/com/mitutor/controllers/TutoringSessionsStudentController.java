@@ -1,6 +1,5 @@
 package com.mitutor.controllers;
 
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mitutor.dtos.Responses.TutoringSessionResponse;
 import com.mitutor.dtos.input.CreateTutoringSessionStudent;
 import com.mitutor.dtos.output.TutoringSessionStudentResponse;
 import com.mitutor.entities.Student;
@@ -71,7 +69,6 @@ public class TutoringSessionsStudentController {
 			
 			return new ResponseEntity<>(response,HttpStatus.OK);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}

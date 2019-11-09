@@ -15,10 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.mitutor.dtos.output.QualificationResponse;
 import com.mitutor.entities.Person;
 import com.mitutor.entities.Qualification;
-import com.mitutor.entities.Tutor;
 import com.mitutor.services.IPersonService;
 import com.mitutor.services.IQualificationService;
-import com.mitutor.services.ITutorService;
 
 import io.swagger.annotations.Api;
 
@@ -57,7 +55,6 @@ public class QualificationController {
 			 return new ResponseEntity<>(response,HttpStatus.OK);
 			 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 

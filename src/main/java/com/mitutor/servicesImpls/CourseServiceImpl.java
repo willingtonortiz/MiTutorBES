@@ -3,7 +3,6 @@ package com.mitutor.servicesImpls;
 import java.util.List;
 import java.util.Optional;
 
-import com.mitutor.entities.Topic;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

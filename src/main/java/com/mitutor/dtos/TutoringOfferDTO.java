@@ -1,7 +1,5 @@
 package com.mitutor.dtos;
 
-import com.mitutor.entities.TutoringOffer;
-
 import java.io.Serializable;
 import java.util.Date;
 

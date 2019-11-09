@@ -1,11 +1,5 @@
 package com.mitutor.dtos.Responses;
 
-import com.mitutor.entities.Qualification;
-import com.mitutor.entities.Student;
-import com.mitutor.entities.Topic;
-import com.mitutor.entities.TutoringOffer;
-
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -127,7 +127,6 @@ public class UserController {
 
             return new ResponseEntity<>(tutorResponse, HttpStatus.OK);
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

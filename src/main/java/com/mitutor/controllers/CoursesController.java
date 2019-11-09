@@ -2,7 +2,6 @@ package com.mitutor.controllers;
 
 import com.mitutor.converters.CourseConverter;
 import com.mitutor.converters.TopicConverter;
-import com.mitutor.converters.UniversityConverter;
 import com.mitutor.dtos.CourseDTO;
 import com.mitutor.dtos.TopicDTO;
 import com.mitutor.dtos.input.CreateCourseInput;
@@ -12,7 +11,6 @@ import com.mitutor.entities.University;
 import com.mitutor.services.ICourseService;
 import com.mitutor.services.ITopicService;
 import com.mitutor.services.IUniversityService;
-import com.mitutor.servicesImpls.TopicServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
@@ -23,8 +21,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.xml.ws.Response;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -40,8 +36,6 @@ public class CoursesController {
     private IUniversityService universityService;
     @Autowired
     private CourseConverter courseConverter;
-    @Autowired
-    private UniversityConverter universityConverter;
     @Autowired
     private TopicConverter topicConverter;
     @Autowired
