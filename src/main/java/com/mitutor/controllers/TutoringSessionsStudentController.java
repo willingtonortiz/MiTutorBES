@@ -19,6 +19,10 @@ import com.mitutor.services.IStudentService;
 import com.mitutor.services.ITutoringSessionService;
 import com.mitutor.services.ITutoringSessionStudentService;
 
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
 @RestController
 @RequestMapping("api/tutoringSessionStudent")
 
@@ -33,6 +37,12 @@ public class TutoringSessionsStudentController {
 	
 	@Autowired
 	private ITutoringSessionService tutoringSessionService;
+	
+	
+	@ApiOperation(value = "Register user", notes = "Method create register of student in tutoring session")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Tutoring Session Student created successfully"),
+			@ApiResponse(code = 404, message = "Student or TutoringSession  not found"),
+			@ApiResponse(code = 500, message = "Internal server error") })
 	
 	@PostMapping(
 				consumes = MediaType.APPLICATION_JSON_VALUE,
