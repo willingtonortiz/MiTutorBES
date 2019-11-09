@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.mitutor.entities.Tutor;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ITutorRepository extends JpaRepository<Tutor, Integer> {
@@ -21,7 +22,7 @@ public interface ITutorRepository extends JpaRepository<Tutor, Integer> {
     );
 
     @Query(value = "SELECT u FROM University u WHERE  u.id = (SELECT p.university.id FROM Person p WHERE p.id = :tutorId)")
-    public University findUniversity(
+    public Optional<University> findUniversity(
             @Param("tutorId") int tutorId
     );
 }

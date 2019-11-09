@@ -78,7 +78,7 @@ public class TutorServiceImpl implements ITutorService {
 
     @Transactional(readOnly = true)
     @Override
-    public University findUniversity(Integer tutorId) throws Exception {
+    public Optional<University> findUniversityByTutorId(Integer tutorId) throws Exception {
         return tutorRepository.findUniversity(tutorId);
     }
 }
