@@ -32,7 +32,7 @@ public class TutoringOfferResponseConverter implements IConverter<TutoringOffer,
         tutoringOfferResponse.setTutor(entity.getTutor().getPerson().getName());
         tutoringOfferResponse.setCourse(entity.getCourse().getName());
         tutoringOfferResponse.setUniversityName(entity.getUniversity().getName());
-
+        tutoringOfferResponse.setIdTutor(entity.getTutor().getId());
 
         for(Topic topics: entity.getTopics())
             tutoringOfferResponse.getTopicsName().add(topics.getName());

@@ -25,7 +25,9 @@ public class TutoringOfferResponse {
     private List<String> topicsName = new ArrayList<>();
 
     private List<TutoringSessionResponse> tutoringSessionResponses = new ArrayList<>();
-
+    
+    private Integer idTutor;
+    
     public TutoringOfferResponse() {
     }
 
@@ -122,4 +124,12 @@ public class TutoringOfferResponse {
     public void setTutoringSessionResponses(List<TutoringSessionResponse> tutoringSessionResponses) {
         this.tutoringSessionResponses = tutoringSessionResponses;
     }
+
+	public Integer getIdTutor() {
+		return idTutor;
+	}
+
+	public void setIdTutor(Integer idTutor) {
+		this.idTutor = idTutor;
+	}
 }

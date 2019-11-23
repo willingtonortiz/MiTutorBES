@@ -21,7 +21,9 @@ public class TutoringSessionResponse {
     private Float price;
 
     private List<String> topicsName = new ArrayList<>();
-
+    	
+    
+    private Integer idTutor;
    //STUDENT DTO
 
 
@@ -88,4 +90,12 @@ public class TutoringSessionResponse {
     public void setTopicsName(List<String> topicsName) {
         this.topicsName = topicsName;
     }
+
+	public Integer getIdTutor() {
+		return idTutor;
+	}
+
+	public void setIdTutor(Integer idTutor) {
+		this.idTutor = idTutor;
+	}
 }
