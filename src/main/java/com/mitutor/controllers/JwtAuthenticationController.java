@@ -1,8 +1,16 @@
 package com.mitutor.controllers;
 
+import com.mitutor.dtos.Responses.UserRegisterResponse;
+import com.mitutor.dtos.input.CreateUserInput;
 import com.mitutor.dtos.input.LoginUserInput;
 import com.mitutor.dtos.output.AuthenticatedUserOutput;
+import com.mitutor.entities.Person;
+import com.mitutor.entities.Student;
+import com.mitutor.entities.University;
 import com.mitutor.entities.User;
+import com.mitutor.enums.RoleType;
+import com.mitutor.services.IUniversityService;
+import com.mitutor.services.IUserRegisterService;
 import com.mitutor.services.IUserService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -35,6 +43,11 @@ public class JwtAuthenticationController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private IUniversityService universityService;
+    @Autowired
+    private IUserRegisterService userRegisterService;
+    
     /*
     @Autowired
     private AuthenticationManager authenticationManager;
@@ -124,4 +137,71 @@ public class JwtAuthenticationController {
 
         return "Bearer " + token;
     }
+    
+    
+    
+    @ApiOperation(value = "Register user", notes = "Method create a new user")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User created successfully"),
+            @ApiResponse(code = 404, message = "University not found"),
+            @ApiResponse(code = 500, message = "Internal server error")})
+    @PostMapping(
+    		value = "/register",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<UserRegisterResponse> register(
+            @RequestBody() CreateUserInput createUser
+    ) {
+        try {
+            Optional<University> foundUniversity = universityService.findById(createUser.getUniversityId());
+
+            if (!foundUniversity.isPresent()) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+
+            Person newPerson = new Person()
+                    .withName(createUser.getName())
+                    .withLastname(createUser.getLastName())
+                    .withSemester(createUser.getSemester())
+                    .withCareer(createUser.getCareer())
+                    .withUniversity(foundUniversity.get());
+
+            Student newStudent = new Student()
+                    .withPoints(0.00f)
+                    .withQualificationCount(0);
+
+            // Encoding password
+            String encodedPassword = passwordEncoder.encode(createUser.getPassword());
+
+            User newUser = new User()
+                    .withUsername(createUser.getUsername())
+                    .withPassword(encodedPassword)
+                    .withEmail(createUser.getEmail())
+                    .withRole(RoleType.STUDENT);
+
+            newPerson.setUser(newUser);
+            newUser.setPerson(newPerson);
+
+            newPerson.setStudent(newStudent);
+            newStudent.setPerson(newPerson);
+
+            User userResult = userRegisterService.register(newPerson, newStudent, newUser);
+
+            UserRegisterResponse userResponse = new UserRegisterResponse()
+                    .withId(userResult.getId())
+                    .withEmail(userResult.getEmail())
+                    .withUsername(userResult.getUsername())
+                    .withRole(userResult.getRole());
+
+            return new ResponseEntity<>(userResponse, HttpStatus.OK);
+
+        } catch (Exception e) {
+
+//            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    
 }

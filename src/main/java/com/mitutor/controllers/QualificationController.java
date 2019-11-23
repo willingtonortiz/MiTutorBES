@@ -19,47 +19,52 @@ import com.mitutor.services.IPersonService;
 import com.mitutor.services.IQualificationService;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
 @RequestMapping("api/qualifications")
 @Api(tags = "Qualifications", value = "Web service RESTfull for qualifications")
 public class QualificationController {
-	
-	
+
 	@Autowired
-	private IQualificationService qualificationService; 
-	
+	private IQualificationService qualificationService;
+
 	@Autowired
-	private IPersonService personService; 
-	
-	 @GetMapping(value = "/tutor/{tutorId}", produces = MediaType.APPLICATION_JSON_VALUE)
-	    public ResponseEntity<List<QualificationResponse>> findCommentsByTutor(
-	    		@PathVariable("tutorId") Integer tutorId
-	           ){
-		 
-		 try {
-			Person found =  personService.findById(tutorId).get();
-			 System.out.print(tutorId);
-			 List<Qualification> res =  qualificationService.findAllCommentsByTutor(found);
-			 
-			 List<QualificationResponse> response =  new ArrayList<QualificationResponse>();
-			 for( int i = 0; i< res.size(); i++) {
-				 QualificationResponse newComment = new QualificationResponse(
-						 res.get(i).getAdresser().getFullname(),
-						 res.get(i).getComment(),
-						 res.get(i).getAdresser().getId()
-				);
-				 response.add(newComment);
-			 }
-			 System.out.print(res.size());
-			 return new ResponseEntity<>(response,HttpStatus.OK);
-			 
+	private IPersonService personService;
+
+	@ApiOperation(value = "Register user", notes = "Method get all qualifications by tutor id")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Qualifications created successfully"),
+			@ApiResponse(code = 404, message = "Person  not found"),
+			@ApiResponse(code = 500, message = "Internal server error") })
+
+	@GetMapping(value = "/tutor/{tutorId}", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<QualificationResponse>> findCommentsByTutor(@PathVariable("tutorId") Integer tutorId) {
+
+		try {
+			Person found = personService.findById(tutorId).get();
+
+			if (found == null) {
+				return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			}
+			System.out.print(tutorId);
+			List<Qualification> res = qualificationService.findAllCommentsByTutor(found);
+
+			List<QualificationResponse> response = new ArrayList<QualificationResponse>();
+			for (int i = 0; i < res.size(); i++) {
+				QualificationResponse newComment = new QualificationResponse(res.get(i).getAdresser().getFullname(),
+						res.get(i).getComment(), res.get(i).getAdresser().getId());
+				response.add(newComment);
+			}
+			System.out.print(res.size());
+			return new ResponseEntity<>(response, HttpStatus.OK);
+
 		} catch (Exception e) {
 			e.printStackTrace();
-			 return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
 		}
-	
-		 
-	 }
+
+	}
 }
