@@ -1,5 +1,6 @@
 package com.mitutor.controllers;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
 
@@ -46,6 +47,8 @@ public class UtilsController {
     private IUserRegisterService userRegService;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private ITutoringSessionService tutoringSessionService;
 
     @GetMapping("create")
     public String generateData() throws Exception {
@@ -63,74 +66,74 @@ public class UtilsController {
         courseService.save(course3);
 
         // Creating topics
-        Topic topic_1_1 = new Topic().withName("topic_1_1").withCourse(course1);
+        Topic topic_1_1 = new Topic().withName("limites").withCourse(course1);
         topicService.save(topic_1_1);
-        Topic topic_1_2 = new Topic().withName("topic_1_2").withCourse(course1);
+        Topic topic_1_2 = new Topic().withName("derivadas").withCourse(course1);
         topicService.save(topic_1_2);
-        Topic topic_1_3 = new Topic().withName("topic_1_3").withCourse(course1);
+        Topic topic_1_3 = new Topic().withName("integrales").withCourse(course1);
         topicService.save(topic_1_3);
 
-        Topic topic_2_1 = new Topic().withName("topic_2_1").withCourse(course2);
+        Topic topic_2_1 = new Topic().withName("punteros").withCourse(course2);
         topicService.save(topic_2_1);
-        Topic topic_2_2 = new Topic().withName("topic_2_2").withCourse(course2);
+        Topic topic_2_2 = new Topic().withName("matrices").withCourse(course2);
         topicService.save(topic_2_2);
-        Topic topic_2_3 = new Topic().withName("topic_2_3").withCourse(course2);
+        Topic topic_2_3 = new Topic().withName("sentencias condicionales").withCourse(course2);
         topicService.save(topic_2_3);
 
-        Topic topic_3_1 = new Topic().withName("topic_3_1").withCourse(course3);
+        Topic topic_3_1 = new Topic().withName("MRU").withCourse(course3);
         topicService.save(topic_3_1);
-        Topic topic_3_2 = new Topic().withName("topic_3_2").withCourse(course3);
+        Topic topic_3_2 = new Topic().withName("MRUV").withCourse(course3);
         topicService.save(topic_3_2);
-        Topic topic_3_3 = new Topic().withName("topic_3_3").withCourse(course3);
+        Topic topic_3_3 = new Topic().withName("Movimiento parabolico").withCourse(course3);
         topicService.save(topic_3_3);
 
 
         // Creating persons
         Person person1 = new Person()
-                .withName("person_1")
-                .withLastname("lastname_1")
+                .withName("Kevin")
+                .withLastname("Mitchell")
                 .withSemester(6)
-                .withCareer("ingenieria de software")
+                .withCareer("matematica pura")
                 .withUniversity(university1);
         personService.save(person1);
 
         Person person2 = new Person()
-                .withName("person_2")
-                .withLastname("lastname_2")
+                .withName("Elaine")
+                .withLastname("Sims")
                 .withSemester(5)
-                .withCareer("ingenieria industrial")
+                .withCareer("ingeniería de sistemas")
                 .withUniversity(university1);
         personService.save(person2);
 
         Person person3 = new Person()
-                .withName("person_3")
-                .withLastname("lastname_3")
+                .withName("Alexander")
+                .withLastname("Eastman")
                 .withSemester(4)
-                .withCareer("ingenieria economica")
+                .withCareer("ingeniería de software")
                 .withUniversity(university1);
         personService.save(person3);
 
         // Creating users
         User user1 = new User()
-                .withUsername("username_1")
-                .withPassword(passwordEncoder.encode("password_1"))
-                .withEmail("email1@email1.com")
+                .withUsername("Kevin")
+                .withPassword(passwordEncoder.encode("Mitchell"))
+                .withEmail("KevinJMitchell@gustr.com")
                 .withRole(RoleType.TUTOR)
                 .withPerson(person1);
         userService.save(user1);
 
         User user2 = new User()
-                .withUsername("username_2")
-                .withPassword(passwordEncoder.encode("password_2"))
-                .withEmail("email2@email2.com")
+                .withUsername("Elaine")
+                .withPassword(passwordEncoder.encode("Sims"))
+                .withEmail("ElaineDSims@gustr.com")
                 .withRole(RoleType.TUTOR)
                 .withPerson(person2);
         userService.save(user2);
 
         User user3 = new User()
-                .withUsername("username_3")
-                .withPassword(passwordEncoder.encode("password_3"))
-                .withEmail("email3@email3.com")
+                .withUsername("Alexander")
+                .withPassword(passwordEncoder.encode("Eastman"))
+                .withEmail("AlexanderSEastman@gustr.com")
                 .withRole(RoleType.TUTOR)
                 .withPerson(person3);
         userService.save(user3);
@@ -144,10 +147,18 @@ public class UtilsController {
                 .withPerson(person1);
         tutorService.save(tutor1);
 
+        Tutor tutor2 = new Tutor()
+                .withDescription("Tutor de fisica")
+                .withPoints(4.12)
+                .withQualificationCount(35)
+                .withStatus(TutorStatus.AVAILABLE)
+                .withPerson(person1);
+        tutorService.save(tutor2);
+
         Tutor tutor3 = new Tutor()
                 .withDescription("Tutor de programacion")
-                .withPoints(4.05)
-                .withQualificationCount(25)
+                .withPoints(4.75)
+                .withQualificationCount(75)
                 .withStatus(TutorStatus.AVAILABLE)
                 .withPerson(person3);
         tutorService.save(tutor3);
@@ -158,8 +169,8 @@ public class UtilsController {
 
         // Creating tutoringOffers
         TutoringOffer tutoringOffer1 = new TutoringOffer()
-                .withStartTime(new Date())
-                .withEndTime(new Date())
+                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19))
+                .withEndTime(new Date(2019, Calendar.NOVEMBER, 21))
                 .withCapacity(5)
                 .withDescription("Tutoría de calculo 2")
                 .withTutor(tutor1)
@@ -170,18 +181,122 @@ public class UtilsController {
                 .addTopic(topic_1_3);
         tutoringOfferService.save(tutoringOffer1);
 
+        TutoringSession tutoringSession_1_1 = new TutoringSession()
+                .withTutoringOffer(tutoringOffer1)
+                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19, 16,0,0))
+                .withEndTime(new Date(2019, Calendar.NOVEMBER, 19, 18,0,0))
+                .withDescription("Primer repaso de cálculo")
+                .withPlace("UPC Villa cubículo 23")
+                .withPrice(20f)
+                .withStudentCount(0)
+                .addTopic(topic_1_1);
+        tutoringSessionService.save(tutoringSession_1_1);
+
+        TutoringSession tutoringSession_1_2 = new TutoringSession()
+                .withTutoringOffer(tutoringOffer1)
+                .withStartTime(new Date(2019, Calendar.NOVEMBER, 20, 16,0,0))
+                .withEndTime(new Date(2019, Calendar.NOVEMBER, 20, 18,0,0))
+                .withDescription("Segundo repaso de cálculo")
+                .withPlace("UPC Villa cubículo 25")
+                .withPrice(20f)
+                .withStudentCount(0)
+                .addTopic(topic_1_2);
+        tutoringSessionService.save(tutoringSession_1_2);
+
+        TutoringSession tutoringSession_1_3 = new TutoringSession()
+                .withTutoringOffer(tutoringOffer1)
+                .withStartTime(new Date(2019, Calendar.NOVEMBER, 21, 16,0,0))
+                .withEndTime(new Date(2019, Calendar.NOVEMBER, 21, 18,0,0))
+                .withDescription("Último repaso de cálculo")
+                .withPlace("UPC Villa cubículo 30")
+                .withPrice(20f)
+                .withStudentCount(0)
+                .addTopic(topic_1_3);
+        tutoringSessionService.save(tutoringSession_1_3);
+
+
         TutoringOffer tutoringOffer2 = new TutoringOffer()
-                .withStartTime(new Date())
-                .withEndTime(new Date())
-                .withCapacity(4)
-                .withDescription("Tutoria de programacion 1")
+                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19))
+                .withEndTime(new Date(2019, Calendar.NOVEMBER, 21))
+                .withCapacity(5)
+                .withDescription("Tutoria de fisica")
+                .withTutor(tutor2)
+                .withCourse(course2)
+                .withUniversity(university1)
+                .addTopic(topic_2_1)
+                .addTopic(topic_2_2)
+                .addTopic(topic_2_3);
+        tutoringOfferService.save(tutoringOffer2);
+
+        TutoringSession tutoringSession_2_1 = new TutoringSession()
+                .withTutoringOffer(tutoringOffer2)
+                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19, 10,0,0))
+                .withEndTime(new Date(2019, Calendar.NOVEMBER, 19, 12,0,0))
+                .withDescription("Primer repaso de fisica")
+                .withPlace("UPC Villa cubículo 02")
+                .withPrice(20f)
+                .withStudentCount(0)
+                .addTopic(topic_2_1);
+        tutoringSessionService.save(tutoringSession_2_1);
+
+        TutoringSession tutoringSession_2_2 = new TutoringSession()
+                .withTutoringOffer(tutoringOffer2)
+                .withStartTime(new Date(2019, Calendar.NOVEMBER, 20, 10,0,0))
+                .withEndTime(new Date(2019, Calendar.NOVEMBER, 20, 12,0,0))
+                .withDescription("Repaso final")
+                .withPlace("UPC Villa cubículo 07")
+                .withPrice(20f)
+                .withStudentCount(0)
+                .addTopic(topic_2_2)
+                .addTopic(topic_2_3);
+        tutoringSessionService.save(tutoringSession_2_2);
+
+
+        TutoringOffer tutoringOffer3 = new TutoringOffer()
+                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19))
+                .withEndTime(new Date(2019, Calendar.NOVEMBER, 21))
+                .withCapacity(5)
+                .withDescription("Preparación para el examen final O_O")
                 .withTutor(tutor3)
                 .withCourse(course3)
                 .withUniversity(university1)
                 .addTopic(topic_3_1)
                 .addTopic(topic_3_2)
                 .addTopic(topic_3_3);
-        tutoringOfferService.save(tutoringOffer2);
+        tutoringOfferService.save(tutoringOffer3);
+
+        TutoringSession tutoringSession_3_1 = new TutoringSession()
+                .withTutoringOffer(tutoringOffer3)
+                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19, 15,0,0))
+                .withEndTime(new Date(2019, Calendar.NOVEMBER, 19, 17,0,0))
+                .withDescription("Primer repaso de programación 1")
+                .withPlace("UPC Villa cubículo 11")
+                .withPrice(20f)
+                .withStudentCount(0)
+                .addTopic(topic_3_1);
+        tutoringSessionService.save(tutoringSession_3_1);
+
+        TutoringSession tutoringSession_3_2 = new TutoringSession()
+                .withTutoringOffer(tutoringOffer3)
+                .withStartTime(new Date(2019, Calendar.NOVEMBER, 20, 15,0,0))
+                .withEndTime(new Date(2019, Calendar.NOVEMBER, 20, 17,0,0))
+                .withDescription("Segundo repaso de programación 1")
+                .withPlace("UPC Villa cubículo 12")
+                .withPrice(20f)
+                .withStudentCount(0)
+                .addTopic(topic_3_2);
+        tutoringSessionService.save(tutoringSession_3_2);
+
+        TutoringSession tutoringSession_3_3 = new TutoringSession()
+                .withTutoringOffer(tutoringOffer1)
+                .withStartTime(new Date(2019, Calendar.NOVEMBER, 21, 15,0,0))
+                .withEndTime(new Date(2019, Calendar.NOVEMBER, 21, 17,0,0))
+                .withDescription("Último repaso de programacion 1")
+                .withPlace("UPC Villa cubículo 13")
+                .withPrice(20f)
+                .withStudentCount(0)
+                .addTopic(topic_3_3);
+        tutoringSessionService.save(tutoringSession_3_3);
 
         return "Datos creados correctamente";
     }

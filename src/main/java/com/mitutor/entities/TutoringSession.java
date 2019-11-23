@@ -70,6 +70,61 @@ public class TutoringSession implements Serializable {
 
 	}
 
+	public TutoringSession withId(Integer id){
+		this.setId(id);
+		return this;
+	}
+
+	public TutoringSession withPlace(String place){
+		this.setPlace(place);
+		return this;
+	}
+
+	public TutoringSession withStartTime(Date startTime){
+		this.setStartTime(startTime);
+		return this;
+	}
+
+	public TutoringSession withEndTime(Date endTime){
+		this.setEndTime(endTime);
+		return this;
+	}
+
+	public TutoringSession withStudentCount(Integer studentCount){
+		this.setStudentCount(studentCount);
+		return this;
+	}
+
+	public TutoringSession withDescription(String description){
+		this.setDescription(description);
+		return this;
+	}
+
+	public TutoringSession withPrice(Float price){
+		this.setPrice(price);
+		return this;
+	}
+
+	public TutoringSession addTopic(Topic topic){
+		this.topics.add(topic);
+		return this;
+	}
+
+	public TutoringSession withTutoringOffer(TutoringOffer tutoringOffer){
+		this.setTutoringOffer(tutoringOffer);
+		return this;
+	}
+
+	public TutoringSession addStudent(Student student){
+		this.students.add(student);
+		return this;
+	}
+
+	public TutoringSession addQualification(Qualification qualification){
+		this.qualifications.add(qualification);
+		return this;
+	}
+
 	public Integer getId() {
 		return id;
 	}
