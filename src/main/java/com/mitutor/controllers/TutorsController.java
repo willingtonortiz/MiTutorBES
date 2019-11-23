@@ -149,7 +149,6 @@ public class TutorsController {
             @RequestBody() Integer courseId
     ) {
         try {
-            // System.out.println(tutorId + " " + courseId);
             Optional<Course> foundCourse = courseService.findById(courseId);
             if (!foundCourse.isPresent()) {
                 return new ResponseEntity<>(2, HttpStatus.NOT_FOUND);
@@ -211,8 +210,5 @@ public class TutorsController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-
-
-
+    
 }
