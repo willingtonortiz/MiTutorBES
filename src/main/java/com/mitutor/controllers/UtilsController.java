@@ -2,6 +2,7 @@ package com.mitutor.controllers;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Optional;
 
 import com.mitutor.entities.*;
@@ -73,18 +74,18 @@ public class UtilsController {
         Topic topic_1_3 = new Topic().withName("integrales").withCourse(course1);
         topicService.save(topic_1_3);
 
-        Topic topic_2_1 = new Topic().withName("punteros").withCourse(course2);
+        Topic topic_2_1 = new Topic().withName("MRU").withCourse(course2);
         topicService.save(topic_2_1);
-        Topic topic_2_2 = new Topic().withName("matrices").withCourse(course2);
+        Topic topic_2_2 = new Topic().withName("MRUV").withCourse(course2);
         topicService.save(topic_2_2);
-        Topic topic_2_3 = new Topic().withName("sentencias condicionales").withCourse(course2);
+        Topic topic_2_3 = new Topic().withName("Movimiento parabolico").withCourse(course2);
         topicService.save(topic_2_3);
 
-        Topic topic_3_1 = new Topic().withName("MRU").withCourse(course3);
+        Topic topic_3_1 = new Topic().withName("punteros").withCourse(course3);
         topicService.save(topic_3_1);
-        Topic topic_3_2 = new Topic().withName("MRUV").withCourse(course3);
+        Topic topic_3_2 = new Topic().withName("matrices").withCourse(course3);
         topicService.save(topic_3_2);
-        Topic topic_3_3 = new Topic().withName("Movimiento parabolico").withCourse(course3);
+        Topic topic_3_3 = new Topic().withName("sentencias condicionales").withCourse(course3);
         topicService.save(topic_3_3);
 
 
@@ -152,7 +153,7 @@ public class UtilsController {
                 .withPoints(4.12)
                 .withQualificationCount(35)
                 .withStatus(TutorStatus.AVAILABLE)
-                .withPerson(person1);
+                .withPerson(person2);
         tutorService.save(tutor2);
 
         Tutor tutor3 = new Tutor()
@@ -166,11 +167,13 @@ public class UtilsController {
 
         // Creating TutorCourse relashionships
         tutorCourseService.save(new TutorCourse().withCourse(course1).withTutor(tutor1));
+        tutorCourseService.save(new TutorCourse().withCourse(course2).withTutor(tutor2));
+        tutorCourseService.save(new TutorCourse().withCourse(course3).withTutor(tutor3));
 
         // Creating tutoringOffers
         TutoringOffer tutoringOffer1 = new TutoringOffer()
-                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19))
-                .withEndTime(new Date(2019, Calendar.NOVEMBER, 21))
+                .withStartTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 19).getTime())
+                .withEndTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 21).getTime())
                 .withCapacity(5)
                 .withDescription("Tutoría de calculo 2")
                 .withTutor(tutor1)
@@ -183,8 +186,8 @@ public class UtilsController {
 
         TutoringSession tutoringSession_1_1 = new TutoringSession()
                 .withTutoringOffer(tutoringOffer1)
-                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19, 16,0,0))
-                .withEndTime(new Date(2019, Calendar.NOVEMBER, 19, 18,0,0))
+                .withStartTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 19, 16,0,0).getTime())
+                .withEndTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 19, 18,0,0).getTime())
                 .withDescription("Primer repaso de cálculo")
                 .withPlace("UPC Villa cubículo 23")
                 .withPrice(20f)
@@ -194,8 +197,8 @@ public class UtilsController {
 
         TutoringSession tutoringSession_1_2 = new TutoringSession()
                 .withTutoringOffer(tutoringOffer1)
-                .withStartTime(new Date(2019, Calendar.NOVEMBER, 20, 16,0,0))
-                .withEndTime(new Date(2019, Calendar.NOVEMBER, 20, 18,0,0))
+                .withStartTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 20, 16,0,0).getTime())
+                .withEndTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 20, 18,0,0).getTime())
                 .withDescription("Segundo repaso de cálculo")
                 .withPlace("UPC Villa cubículo 25")
                 .withPrice(20f)
@@ -205,8 +208,8 @@ public class UtilsController {
 
         TutoringSession tutoringSession_1_3 = new TutoringSession()
                 .withTutoringOffer(tutoringOffer1)
-                .withStartTime(new Date(2019, Calendar.NOVEMBER, 21, 16,0,0))
-                .withEndTime(new Date(2019, Calendar.NOVEMBER, 21, 18,0,0))
+                .withStartTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 21, 16,0,0).getTime())
+                .withEndTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 21, 18,0,0).getTime())
                 .withDescription("Último repaso de cálculo")
                 .withPlace("UPC Villa cubículo 30")
                 .withPrice(20f)
@@ -216,8 +219,8 @@ public class UtilsController {
 
 
         TutoringOffer tutoringOffer2 = new TutoringOffer()
-                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19))
-                .withEndTime(new Date(2019, Calendar.NOVEMBER, 21))
+                .withStartTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 19).getTime())
+                .withEndTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 21).getTime())
                 .withCapacity(5)
                 .withDescription("Tutoria de fisica")
                 .withTutor(tutor2)
@@ -230,8 +233,8 @@ public class UtilsController {
 
         TutoringSession tutoringSession_2_1 = new TutoringSession()
                 .withTutoringOffer(tutoringOffer2)
-                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19, 10,0,0))
-                .withEndTime(new Date(2019, Calendar.NOVEMBER, 19, 12,0,0))
+                .withStartTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 19, 10,0,0).getTime())
+                .withEndTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 19, 12,0,0).getTime())
                 .withDescription("Primer repaso de fisica")
                 .withPlace("UPC Villa cubículo 02")
                 .withPrice(20f)
@@ -241,8 +244,8 @@ public class UtilsController {
 
         TutoringSession tutoringSession_2_2 = new TutoringSession()
                 .withTutoringOffer(tutoringOffer2)
-                .withStartTime(new Date(2019, Calendar.NOVEMBER, 20, 10,0,0))
-                .withEndTime(new Date(2019, Calendar.NOVEMBER, 20, 12,0,0))
+                .withStartTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 20, 10,0,0).getTime())
+                .withEndTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 20, 12,0,0).getTime())
                 .withDescription("Repaso final")
                 .withPlace("UPC Villa cubículo 07")
                 .withPrice(20f)
@@ -253,8 +256,8 @@ public class UtilsController {
 
 
         TutoringOffer tutoringOffer3 = new TutoringOffer()
-                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19))
-                .withEndTime(new Date(2019, Calendar.NOVEMBER, 21))
+                .withStartTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 19).getTime())
+                .withEndTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 21).getTime())
                 .withCapacity(5)
                 .withDescription("Preparación para el examen final O_O")
                 .withTutor(tutor3)
@@ -267,8 +270,8 @@ public class UtilsController {
 
         TutoringSession tutoringSession_3_1 = new TutoringSession()
                 .withTutoringOffer(tutoringOffer3)
-                .withStartTime(new Date(2019, Calendar.NOVEMBER, 19, 15,0,0))
-                .withEndTime(new Date(2019, Calendar.NOVEMBER, 19, 17,0,0))
+                .withStartTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 19, 15,0,0).getTime())
+                .withEndTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 19, 17,0,0).getTime())
                 .withDescription("Primer repaso de programación 1")
                 .withPlace("UPC Villa cubículo 11")
                 .withPrice(20f)
@@ -278,8 +281,8 @@ public class UtilsController {
 
         TutoringSession tutoringSession_3_2 = new TutoringSession()
                 .withTutoringOffer(tutoringOffer3)
-                .withStartTime(new Date(2019, Calendar.NOVEMBER, 20, 15,0,0))
-                .withEndTime(new Date(2019, Calendar.NOVEMBER, 20, 17,0,0))
+                .withStartTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 20, 15,0,0).getTime())
+                .withEndTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 20, 17,0,0).getTime())
                 .withDescription("Segundo repaso de programación 1")
                 .withPlace("UPC Villa cubículo 12")
                 .withPrice(20f)
@@ -288,9 +291,9 @@ public class UtilsController {
         tutoringSessionService.save(tutoringSession_3_2);
 
         TutoringSession tutoringSession_3_3 = new TutoringSession()
-                .withTutoringOffer(tutoringOffer1)
-                .withStartTime(new Date(2019, Calendar.NOVEMBER, 21, 15,0,0))
-                .withEndTime(new Date(2019, Calendar.NOVEMBER, 21, 17,0,0))
+                .withTutoringOffer(tutoringOffer3)
+                .withStartTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 21, 15,0,0).getTime())
+                .withEndTime(new GregorianCalendar(2019, Calendar.NOVEMBER, 21, 17,0,0).getTime())
                 .withDescription("Último repaso de programacion 1")
                 .withPlace("UPC Villa cubículo 13")
                 .withPrice(20f)
@@ -305,6 +308,7 @@ public class UtilsController {
     public String deleteData() throws Exception {
 
         // deleting data
+        tutoringSessionService.deleteAll();
         tutoringOfferService.deleteAll();
         tutorCourseService.deleteAll();
         tutorService.deleteAll();
